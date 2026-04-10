@@ -1,0 +1,43 @@
+{{!-- templates/apps/element-tracker.hbs --}}
+<div class="element-tracker-body">
+
+  <div class="element-grid">
+    {{#each elements}}
+    <button type="button"
+            class="element-tile state-{{state}}{{#if isStrong}} is-strong{{/if}}{{#if isWaning}} is-waning{{/if}}"
+            data-action="cycleElement"
+            data-element="{{key}}"
+            title="{{label}} — {{stateLabel}}{{#unless ../isGM}} (GM only){{/unless}}"
+            {{#unless ../isGM}}disabled{{/unless}}>
+      <span class="el-icon">
+        {{#if (eq key "air")}}  <i class="fas fa-wind"></i>{{/if}}
+        {{#if (eq key "dark")}} <i class="fas fa-moon"></i>{{/if}}
+        {{#if (eq key "earth")}}<i class="fas fa-mountain"></i>{{/if}}
+        {{#if (eq key "fire")}} <i class="fas fa-fire"></i>{{/if}}
+        {{#if (eq key "ice")}}  <i class="fas fa-snowflake"></i>{{/if}}
+        {{#if (eq key "light")}}<i class="fas fa-sun"></i>{{/if}}
+      </span>
+      <span class="el-name">{{label}}</span>
+      <div class="el-pips">
+        <span class="pip{{#if (or isWaning isStrong)}} filled{{/if}}"></span>
+        <span class="pip{{#if isStrong}} filled{{/if}}"></span>
+      </div>
+      <span class="el-state">{{stateLabel}}</span>
+    </button>
+    {{/each}}
+  </div>
+
+  {{#if isGM}}
+  <div class="tracker-controls">
+    <button type="button" class="tracker-btn decay-btn" data-action="decayAll"
+            title="Decay all active elements one step (end of round)">
+      <i class="fas fa-hourglass-half"></i> Decay All
+    </button>
+    <button type="button" class="tracker-btn reset-btn" data-action="resetAll"
+            title="Reset all elements to Inert">
+      <i class="fas fa-undo"></i> Reset All
+    </button>
+  </div>
+  {{/if}}
+
+</div>
