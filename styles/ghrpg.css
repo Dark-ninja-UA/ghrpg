@@ -1290,3 +1290,20 @@
   font-size: 10px; color: var(--ghrpg-gold);
   margin-left: 3px; opacity: 0.85;
 }
+
+/* ─── GM Deck App ────────────────────────────────────────────── */
+.gm-deck-app .window-content { padding: 0; }
+.gm-deck-body {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 10px; overflow-y: auto; height: 100%;
+}
+.gm-deck-draw-section { display: flex; flex-direction: column; gap: 4px; }
+.gm-deck-counters {
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+.gm-deck-controls { display: flex; gap: 6px; }
+.gm-last-drawn { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 4px; }
+.gm-last-drawn-title { font-size: 11px; color: var(--ghrpg-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.gm-no-draw { text-align: center; color: var(--ghrpg-text-muted); font-size: 12px; padding: 16px; }
+.bless-chip { color: #ffcc44; border-color: #886600; }
+.curse-chip { color: #cc88ff; border-color: #7744aa; }

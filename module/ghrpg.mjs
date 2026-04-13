@@ -12,6 +12,7 @@ import { GHRPGItemSheet }      from "./sheets/item-sheet.mjs";
 import { registerHandlebarsHelpers } from "./helpers/handlebars.mjs";
 import { buildDeck }            from "./helpers/modifier-deck.mjs";
 import { ElementTracker }       from "./apps/element-tracker.mjs";
+import { GMDeckApp }            from "./apps/gm-deck.mjs";
 
 /* ─────────────────────────────────────────
    Hooks.once("init")
@@ -47,6 +48,7 @@ Hooks.once("init", () => {
 
   // ── Element Tracker world setting ────────────────────────────
   ElementTracker.registerSettings();
+  GMDeckApp.registerSettings();
 
   // ── Pre-load templates ────────────────────────────────────────
   const templates = [
@@ -60,6 +62,7 @@ Hooks.once("init", () => {
     "systems/ghrpg/templates/actors/npc-sheet.hbs",
     "systems/ghrpg/templates/items/item-sheet.hbs",
     "systems/ghrpg/templates/apps/element-tracker.hbs",
+    "systems/ghrpg/templates/apps/gm-deck.hbs",
   ];
   loadTemplates(templates);
 
@@ -93,12 +96,15 @@ Hooks.on("createActor", async (actor) => {
 Hooks.once("ready", () => {
   // Create singleton tracker instance
   const tracker = new ElementTracker();
+  const gmDeck  = new GMDeckApp();
 
   game.ghrpg = {
     elementTracker: tracker,
+    gmDeck:         gmDeck,
 
     /** Open the shared Element Tracker window */
     openElementTracker: () => tracker.render({ force: true }),
+    openGMDeck:         () => gmDeck.render({ force: true }),
 
     /** Roll an attribute test for the selected token's actor */
     rollAttribute: async (attrKey, options = {}) => {
@@ -163,6 +169,14 @@ Hooks.on("getSceneControlButtons", (controls) => {
   // v13: controls is an object keyed by group name
   const tokens = controls.tokens ?? controls.token;
   if (tokens?.tools) {
+    tokens.tools["ghrpg-gm-deck"] = {
+      name:    "ghrpg-gm-deck",
+      title:   "GM Modifier Deck",
+      icon:    "fas fa-skull",
+      button:  true,
+      onClick: () => game.ghrpg?.openGMDeck(),
+      visible: game.user.isGM,
+    };
     tokens.tools["ghrpg-elements"] = {
       name:    "ghrpg-elements",
       title:   "Element Tracker",

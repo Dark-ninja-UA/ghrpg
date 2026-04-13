@@ -44,8 +44,10 @@ export class GHRPGItem extends Item {
     // Post skill card to chat
     await this._postSkillCard();
 
-    // Mark expended
-    await this.update({ "system.expended": true });
+    // Mark expended unless flagged as non-expending
+    if (!system.noExpend) {
+      await this.update({ "system.expended": true });
+    }
   }
 
   /** Post a skill-use card to chat */

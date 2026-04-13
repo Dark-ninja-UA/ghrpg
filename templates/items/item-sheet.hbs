@@ -49,6 +49,9 @@
       <div class="form-group check-group">
         <label><input type="checkbox" name="system.expended" {{#if system.expended}}checked{{/if}} /> Expended</label>
       </div>
+      <div class="form-group check-group">
+        <label><input type="checkbox" name="system.noExpend" {{#if system.noExpend}}checked{{/if}} title="Skill posts to chat but is never marked as expended" /> Not expended on use</label>
+      </div>
     </div>
     <div class="form-group">
       <label>Description / Notes</label>
@@ -90,6 +93,9 @@
     <div class="form-group">
       <label>Description</label>
       <textarea name="system.description" class="bio-textarea">{{system.description}}</textarea>
+    </div>
+    <div class="form-group check-group">
+      <label><input type="checkbox" name="system.noExpend" {{#if system.noExpend}}checked{{/if}} title="Talent posts to chat but is never marked as expended" /> Not expended on use</label>
     </div>
   </div>
   {{/if}}

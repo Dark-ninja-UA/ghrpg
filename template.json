@@ -208,7 +208,8 @@
       "lost": false,
       "prepared": false,
       "description": "",
-      "elements": []
+      "elements": [],
+      "noExpend": false
     },
     "talent": {
       "level": 1,
@@ -218,7 +219,8 @@
       "passive": false,
       "description": "",
       "upgradeLevel": 5,
-      "upgradesTo": ""
+      "upgradesTo": "",
+      "noExpend": false
     },
     "background": {
       "category": "occupation",

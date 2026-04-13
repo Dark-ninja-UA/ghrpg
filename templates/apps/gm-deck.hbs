@@ -1,0 +1,139 @@
+{{!-- templates/apps/gm-deck.hbs --}}
+<div class="gm-deck-body">
+
+  {{!-- Draw buttons --}}
+  <div class="gm-deck-draw-section">
+    <button type="button" class="draw-btn" data-action="drawCard" data-mode="normal">
+      <i class="fas fa-hand"></i> Normal
+    </button>
+    <button type="button" class="draw-btn draw-advantage" data-action="drawCard" data-mode="advantage">
+      <i class="fas fa-angles-up"></i> Advantage
+    </button>
+    <button type="button" class="draw-btn draw-disadvantage" data-action="drawCard" data-mode="disadvantage">
+      <i class="fas fa-angles-down"></i> Disadvantage
+    </button>
+  </div>
+
+  {{!-- Counters --}}
+  <div class="gm-deck-counters">
+    <div class="counter-chip"><i class="fas fa-layer-group"></i> Draw: {{deckCount}}</div>
+    <div class="counter-chip"><i class="fas fa-clone"></i> Discard: {{discardCount}}</div>
+    <div class="counter-chip bless-chip"><i class="fas fa-person"></i> Bless: {{blessCount}}/6</div>
+    <div class="counter-chip curse-chip"><i class="fas fa-bolt"></i> Curse: {{curseCount}}/6</div>
+  </div>
+
+  {{!-- Deck controls --}}
+  <div class="gm-deck-controls">
+    <button type="button" class="reshuffle-btn" data-action="reshuffleDeck" title="Reshuffle deck">
+      <i class="fas fa-shuffle"></i> Reshuffle
+    </button>
+    <button type="button" class="reshuffle-btn" data-action="initializeDeck" title="Reset to default 20-card deck">
+      <i class="fas fa-rotate-right"></i> Initialize
+    </button>
+  </div>
+
+  {{!-- Bless / Curse --}}
+  <div class="bless-curse-row">
+    <div class="bc-group bless-group">
+      <span class="bc-label bless-label"><i class="fas fa-person"></i> Bless</span>
+      <div class="bc-btn" data-action="removeBless" title="Remove Bless">−</div>
+      <span class="bc-count">{{blessCount}}</span>
+      <div class="bc-btn {{#if blessAtMax}}bc-disabled{{/if}}" data-action="addBless" title="Add Bless">+</div>
+    </div>
+    <div class="bc-group curse-group">
+      <span class="bc-label curse-label"><i class="fas fa-bolt"></i> Curse</span>
+      <div class="bc-btn" data-action="removeCurse" title="Remove Curse">−</div>
+      <span class="bc-count">{{curseCount}}</span>
+      <div class="bc-btn {{#if curseAtMax}}bc-disabled{{/if}}" data-action="addCurse" title="Add Curse">+</div>
+    </div>
+  </div>
+
+  {{!-- Last Drawn --}}
+  {{#if lastDrawn}}
+  <div class="gm-last-drawn">
+    <div class="gm-last-drawn-title">Last Drawn</div>
+
+    {{!-- Adv/Disadv comparison --}}
+    {{#if (gt lastDrawn.allDrawn.length 1)}}
+    <div class="drawn-cards-row">
+      {{#each lastDrawn.allDrawn}}
+      <div class="drawn-card-mini {{#if (eq id ../lastDrawn.applied.id)}}dcm-applied{{else}}dcm-discarded{{/if}} card-type-{{type}}">
+        {{#if (eq type "normal")}}
+          <span class="dcm-atk">{{atkMod}}</span>
+          <span class="dcm-attr-badge">{{attrMod}}</span>
+        {{else}}
+          <span class="dcm-special">{{label}}</span>
+        {{/if}}
+        <span class="dcm-marker">{{#if (eq id ../lastDrawn.applied.id)}}✓{{else}}✗{{/if}}</span>
+      </div>
+      {{/each}}
+    </div>
+    {{/if}}
+
+    {{!-- Card visual --}}
+    <div class="mod-card mod-card-{{lastDrawn.applied.type}}">
+      <div class="mod-card-inner">
+        <div class="mod-card-circle mod-circle-{{lastDrawn.applied.type}}">
+          {{#if (eq lastDrawn.applied.type "normal")}}
+            <span class="mod-atk-value">{{#if (gt lastDrawn.applied.atkMod 0)}}+{{/if}}{{lastDrawn.applied.atkMod}}</span>
+          {{else if (eq lastDrawn.applied.type "null")}}
+            <span class="mod-special-value">✕</span>
+          {{else if (eq lastDrawn.applied.type "critical")}}
+            <span class="mod-special-value">×2</span>
+          {{else if (eq lastDrawn.applied.type "bless")}}
+            <span class="mod-special-value"><i class="fas fa-person"></i></span>
+          {{else if (eq lastDrawn.applied.type "curse")}}
+            <span class="mod-special-value"><i class="fas fa-bolt"></i></span>
+          {{/if}}
+        </div>
+        <div class="mod-card-bottom">
+          <div class="mod-card-portrait" style="display:flex;align-items:center;justify-content:center;background:#1a1010;border-radius:50%;width:26px;height:26px;">
+            <i class="fas fa-skull" style="font-size:11px;color:#886644;"></i>
+          </div>
+          {{#if (eq lastDrawn.applied.type "normal")}}
+          <div class="mod-card-hex">
+            <span class="mod-attr-value">{{#if (gt lastDrawn.applied.attrMod 0)}}+{{/if}}{{lastDrawn.applied.attrMod}}</span>
+          </div>
+          {{/if}}
+        </div>
+        {{#if (eq lastDrawn.applied.type "null")}}    <div class="mod-card-flavor">Miss · Reshuffles deck</div>{{/if}}
+        {{#if (eq lastDrawn.applied.type "critical")}}<div class="mod-card-flavor">Double damage · Reshuffles deck</div>{{/if}}
+        {{#if (eq lastDrawn.applied.type "bless")}}   <div class="mod-card-flavor">Treated as Critical</div>{{/if}}
+        {{#if (eq lastDrawn.applied.type "curse")}}   <div class="mod-card-flavor">Treated as Null</div>{{/if}}
+        {{#if lastDrawn.applied.effects.length}}
+        <div class="mod-card-effects">
+          {{#each lastDrawn.applied.effects}}
+          <span class="mod-card-effect effect-{{type}}{{#if optional}} effect-optional{{/if}}">
+            {{capitalize type}}{{#if value}} {{value}}{{/if}}{{#if optional}} <span class="effect-opt-tag">opt</span>{{/if}}
+          </span>
+          {{/each}}
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="gm-no-draw"><i class="fas fa-cards-blank"></i> No card drawn yet</div>
+  {{/if}}
+
+  {{!-- Discard pile --}}
+  {{#if discardList.length}}
+  <div class="collapsible-section" data-collapsed="true" style="margin-top:8px">
+    <div class="collapsible-header card-mgmt-header" data-action="toggleSection">
+      <i class="fas fa-chevron-right collapse-icon"></i>
+      <span>Discard Pile ({{discardCount}})</span>
+    </div>
+    <div class="collapsible-body" style="display:none; margin-top:4px; max-height:140px; overflow-y:auto;">
+      {{#each discardList}}
+      <div class="discard-row card-type-{{type}}">
+        <span class="discard-card">
+          {{#if (eq type "normal")}}Atk {{atkModDisplay}} / Attr {{#if (gt attrMod 0)}}+{{/if}}{{attrMod}}
+          {{else}}{{label}}{{/if}}
+        </span>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{/if}}
+
+</div>

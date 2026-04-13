@@ -56,7 +56,8 @@
       <div class="skill-main-col">
         <div class="skill-name-row">
           <span class="skill-name">{{name}}</span>
-          <span class="skill-source-badge {{system.sourceType}}">
+          <span class="skill-source-badge {{system.sourceType}}"
+                title="{{#if (eq system.sourceType "ancestry")}}Ancestry Skill{{else}}Class Skill{{/if}}">
             {{#if (eq system.sourceType "ancestry")}}A{{else}}C{{/if}}
           </span>
           {{#if (includes ../ancestrySkillIds id)}}<span class="ancestry-link-badge" title="Linked to {{../selectedAncestry.name}}"><i class="fas fa-dna"></i></span>{{/if}}
