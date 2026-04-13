@@ -16,18 +16,22 @@ An unofficial Foundry VTT v13 system for **Gloomhaven: The Roleplaying Game** by
    https://raw.githubusercontent.com/Dark-ninja-UA/ghrpg/main/system.json
    ```
 3. Click **Install**
+4. When updates are available, click **Update** next to the system in the Game Systems list
 
-### Manual
+### Manual (local Foundry)
 
-Download the latest `ghrpg.zip` from [Releases](https://github.com/Dark-ninja-UA/ghrpg/releases/latest) and unzip into your `Data/systems/` folder.
+1. Download the latest `ghrpg.zip` from [Releases](https://github.com/Dark-ninja-UA/ghrpg/releases/latest)
+2. Extract the zip
+3. Copy the extracted `ghrpg` folder into your Foundry `Data/systems/` directory
+4. Restart Foundry — the system will appear in the Game Systems list
+
+> **Note:** Do not mix manifest URL installation and manual installation for the same system. Use one method consistently.
 
 ---
 
 ## System Philosophy
 
-This system is designed around **manual content entry**. Installing the system gives you a complete rules engine — sheets, dice, the modifier deck — but no pre-loaded game content. You fill in ancestries, classes, skills, and perks yourself from the book.
-
-A companion **content module** (`ghrpg-content`) will be available separately and will provide all book content as Foundry compendiums, allowing instant setup without manual entry.
+This system is a **rules engine only** — no game content is pre-loaded. After installing you manually create Ancestries, Classes, Skills, Talents, and Perks from the book. This keeps the system legally clean and fully customizable.
 
 ---
 
@@ -36,28 +40,28 @@ A companion **content module** (`ghrpg-content`) will be available separately an
 ### Character Sheet
 - **6 tabs:** Stats, Skills, Talents, Inventory, Deck, Biography
 - **Attributes:** Cunning, Finesse, Grit, Intuition, Logic, Understanding (0–7)
-- **HP bar** with live update as you type
-- **Conditions:** all 13 conditions tracked with toggle buttons (Bless, Invisible, Regenerate, Safeguard, Strengthen, Ward, Curse, Immobilize, Muddle, Pacify, Poison, Stun, Wound)
-- **Backgrounds, Equipment, Inventory** management
+- **HP bar** with live update
+- **Conditions** tracked with toggle buttons — positive: Invisible, Regenerate, Safeguard, Strengthen, Ward; negative: Curse, Immobilize, Muddle, Pacify, Poison, Stun, Wound
+- **Gold** field
+- **Quick Breath:** recover all expended non-lost skills
+- **Full Rest:** recover all skills including lost, reshuffle modifier deck, restore HP to max
 
 ### Ancestry & Class System
-- Create **Ancestry** items and **Class** items manually from the book
-- Each has a drag-drop interface to link skills and talents
-- Selecting ancestry/class on a character automatically copies linked skills/talents onto the sheet
-- Changing or clearing ancestry/class removes previously synced items (manually-added items are never touched)
-- **Starting Attribute Bonuses** per class
-- Skills tagged as Ancestry (A), Class (C), or Other (O) for prepared slot tracking
+- Create **Ancestry** and **Class** items manually from the book
+- Ancestry items: description, traits, drag-drop to link skills and talents
+- Class items: description, starting attribute bonuses (per attribute), drag-drop to link skills and talents, perk list
+- Selecting ancestry/class on a character **automatically copies** linked skills/talents onto the sheet
+- Switching ancestry/class removes previously synced items; manually-added items are never touched
+- Skills tagged as **Ancestry (A)**, **Class (C)**, or **Other (O)**
 
 ### Skills & Talents
-- Skill preparation split: **2 Ancestry slots + 4 Class/Other slots** per day
-- Prepared slot limits enforced with warnings
-- Skills can be marked **Not expended on use** (at-will abilities)
-- Use skill → posts card to chat → marks expended (unless toggled off)
-- **Quick Breath:** recover expended non-lost skills
-- **Full Rest:** recover all skills including lost, reshuffle deck, restore HP to max
+- Prepared skill slots split: **2 Ancestry + 4 Class/Other** per day — limits enforced with warnings
+- Skills can be flagged **Not expended on use** for at-will abilities
+- Using a skill posts its card to chat, then marks it expended (unless flagged)
+- Talents are never expended
 
 ### Modifier Deck (per character)
-Corrected 20-card base distribution per the rulebook:
+Correct 20-card base distribution per the rulebook:
 
 | Count | Attr | Atk |
 |-------|------|-----|
@@ -75,44 +79,42 @@ Corrected 20-card base distribution per the rulebook:
 | ×1 | Critical | ×2 |
 
 - **Draw modes:** Normal, Advantage (draw 2, take better), Disadvantage (draw 2, take worse)
-- **Bless / Curse** injection (0–6 each)
+- **Bless / Curse** injection (0–6 each), tracked separately from conditions
 - **Auto-reshuffle** on Null or Critical draw
-- **Add/Remove individual cards** — track removed default cards and restore them
+- **Add / Remove individual cards** from the draw pile; removed defaults can be restored
 - **Custom cards** with attack mod, attribute mod, effects, and flavor text
-- **Card effects:** Poison, Wound, Muddle, Stun, Immobilize, Pierce, Push, Pull, Heal, Strengthen, Curse, Bless, Invisible — each auto or optional
-- **Last Drawn** card shown as physical card visual with portrait, attack circle, and attribute hex badge
+- **Card effects:** Poison, Wound, Muddle, Stun, Immobilize, Pierce, Push, Pull, Heal, Strengthen, Curse, Bless, Invisible — each auto-applied or optional
+- **Last Drawn** card shown as physical card visual (attack value in center circle, attribute mod in gold hex badge, character portrait)
 - **Discard pile** with newest-first scrollable list
 
 ### Perk System
-- Perks defined per class (manually entered on the Class item sheet)
-- Perk editor dialog: label, max times takeable, cards to remove from base deck, cards to add (with effects and flavor text)
-- Character sheet Deck tab shows the full class perk list with checkboxes (one per allowed use)
-- Perk points = `(level − 1) + bonus perks` (bonus perks field editable on sheet)
-- Selecting a perk immediately and surgically modifies the deck — no reshuffle
+- Perks defined per **Class item** via the perk editor dialog
+- Each perk has: label, max times takeable, cards to remove from base deck, cards to add (with effects and flavor text)
+- Character sheet **Deck tab** shows the full class perk list with checkboxes (one checkbox per allowed use)
+- Perk points = `(level − 1) + bonus perks` — bonus perks field editable on the sheet
+- Selecting a perk surgically modifies the deck immediately — no reshuffle triggered
 - Deselecting removes the perk's cards immediately
 
 ### Attribute Tests & Attack Rolls
 - Click any attribute on the Stats tab → dialog for Target Number, bonus, and draw mode
-- Chat output shows a physical card visual (attack mod in center circle, attribute mod in gold hex badge, character portrait)
+- Chat output shows the drawn card as a physical card visual
 - Card effects displayed as color-coded pills on the card
 - Attack rolls use the same visual with damage breakdown
 
 ### GM Modifier Deck
-- Standalone floating window, GM-only (💀 skull icon in scene controls)
-- Same deck mechanics as player decks — Normal/Advantage/Disadvantage draw, Bless/Curse, Reshuffle/Initialize
+- Standalone floating window, **GM only** (skull icon in scene controls sidebar)
+- Full deck mechanics: Normal/Advantage/Disadvantage, Bless/Curse, Reshuffle/Initialize
 - Posts to chat labeled "Game Master"
-- State stored as a world setting, persists across sessions
+- State stored world-wide, persists across sessions
 
 ### Element Tracker
-- Shared world-level floating window (🔥 fire icon in scene controls)
+- Shared world-level floating window (fire icon in scene controls sidebar)
 - All 6 elements: Air, Dark, Earth, Fire, Ice, Light
-- States: Inert → Strong → Waning → Inert
-- GM can cycle elements; **Decay All** and **Reset All** buttons
-- Players see the tracker (view only)
-
-### NPC Sheet
-- HP, Move, Attack, Attribute scores, Conditions
-- Own modifier deck
+- States cycle: **Inert → Strong → Waning → Inert**
+- Decay moves each element one step back toward Inert
+- GM can cycle individual elements; **Decay All** and **Reset All** buttons available
+- Players can view the tracker (read-only)
+- Single tracker shared across all scenes
 
 ---
 
@@ -133,34 +135,21 @@ Corrected 20-card base distribution per the rulebook:
 
 | Type | Purpose |
 |------|---------|
-| Skill | Class or ancestry skill card — initiative, primary/secondary actions, level, source |
-| Talent | Always-available ability — passive flag, upgrade level |
-| Ancestry | Defines ancestry traits, links ancestry skills/talents |
-| Class | Defines starting attribute bonuses, links class skills/talents, holds perk list |
+| Skill | Class or ancestry skill — initiative, primary/secondary actions, level, source type |
+| Talent | Always-available ability — passive flag, upgrade level, not expended on use option |
+| Ancestry | Traits description, linked ancestry skills and talents |
+| Class | Starting attribute bonuses, linked class skills and talents, perk definitions |
 | Background | Occupation/Origin/Social backgrounds with bonus values |
-| Equipment | Gear with slot, rarity, uses, consumable/alchemic flags |
+| Equipment | Gear with slot, rarity, uses, consumable and alchemic flags |
 
 ---
 
-## Scene Controls (Sidebar)
+## Scene Controls (Left Sidebar)
 
-| Icon | Tool | Who |
-|------|------|-----|
-| 💀 | GM Modifier Deck | GM only |
-| 🔥 | Element Tracker | Everyone |
-
----
-
-## Content Module
-
-The `ghrpg-content` module (separate repo: `Dark-ninja-UA/ghrpg-content`) will provide:
-- All 8 ancestries with skills and talents
-- All 16 classes with skills, talents, and perks
-- Equipment and item compendiums
-- Monster stat blocks
-- Rulebook reference journals
-
-When installed and activated, it offers to auto-import everything into your world on first run, or you can use the compendiums manually.
+| Icon | Tool | Visible To |
+|------|------|------------|
+| `fa-skull` | GM Modifier Deck | GM only |
+| `fa-fire` | Element Tracker | Everyone |
 
 ---
 
@@ -173,18 +162,18 @@ When installed and activated, it offers to auto-import everything into your worl
 
 ---
 
-## Roadmap / Known Planned Features
+## Roadmap
 
-- Per-class perk data from rulebook (via content module)
-- Enemy bestiary and stat blocks
-- Battle planning phase UI
-- Faction reputation tracker
-- Company sheet
-- Level-up skill filtering by class and level
+- [ ] Per-class perk data from rulebook
+- [ ] Level-up skill filtering by class and level
+- [ ] Enemy stat blocks / NPC bestiary
+- [ ] Battle planning phase UI
+- [ ] Faction reputation tracker
+- [ ] Company sheet
 
 ---
 
 ## License
 
-System code: **MIT**
-Gloomhaven: The Roleplaying Game content: **© Cephalofair Games, LLC** — all rights reserved
+System code: **MIT**  
+Gloomhaven: The Roleplaying Game: **© Cephalofair Games, LLC** — all rights reserved
