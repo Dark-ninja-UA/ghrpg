@@ -15,6 +15,9 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
     actions: {
       unlinkSkill:  GHRPGItemSheet._onUnlinkSkill,
       unlinkTalent: GHRPGItemSheet._onUnlinkTalent,
+      addPerk:      GHRPGItemSheet._onAddPerk,
+      editPerk:     GHRPGItemSheet._onEditPerk,
+      deletePerk:   GHRPGItemSheet._onDeletePerk,
     }
   };
 
