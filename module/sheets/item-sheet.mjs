@@ -15,9 +15,6 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
     actions: {
       unlinkSkill:  GHRPGItemSheet._onUnlinkSkill,
       unlinkTalent: GHRPGItemSheet._onUnlinkTalent,
-      addPerk:      GHRPGItemSheet._onAddPerk,
-      editPerk:     GHRPGItemSheet._onEditPerk,
-      deletePerk:   GHRPGItemSheet._onDeletePerk,
     }
   };
 
@@ -36,6 +33,35 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
     el.querySelectorAll("input, select, textarea").forEach(input => {
       input.addEventListener("change", () => this._saveField(input));
     });
+
+    // Wire perk buttons manually (class items)
+    if (this.item.type === "class") {
+      el.querySelector("[data-action='addPerk']")?.addEventListener("click", () => {
+        new PerkEditorDialog(this.item, null, -1).render(true);
+      });
+      el.querySelectorAll("[data-action='editPerk']").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx  = Number(btn.dataset.perkIndex);
+          const perk = this.item.system.perks?.[idx];
+          if (perk) new PerkEditorDialog(this.item, perk, idx).render(true);
+        });
+      });
+      el.querySelectorAll("[data-action='deletePerk']").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const idx   = Number(btn.dataset.perkIndex);
+          const perks = foundry.utils.deepClone(this.item.system.perks ?? []);
+          const perk  = perks[idx];
+          if (!perk) return;
+          const ok = await Dialog.confirm({
+            title:   "Delete Perk",
+            content: `<p>Delete "<strong>${perk.label}</strong>"?</p>`,
+          });
+          if (!ok) return;
+          perks.splice(idx, 1);
+          await this.item.update({ "system.perks": perks });
+        });
+      });
+    }
 
     // Drop zones for ancestry and class skill/talent linking
     if (this.item.type === "ancestry" || this.item.type === "class") {
@@ -132,33 +158,4 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
       startingAttributes: item.type === "class" ? system.startingAttributes : null,
     };
   }
-  static async _onAddPerk(event, target) {
-    if (this.item.type !== "class") return;
-    const dialog = new PerkEditorDialog(this.item, null, -1);
-    dialog.render(true);
-  }
-
-  static async _onEditPerk(event, target) {
-    if (this.item.type !== "class") return;
-    const idx  = Number(target.dataset.perkIndex);
-    const perk = this.item.system.perks?.[idx];
-    if (!perk) return;
-    const dialog = new PerkEditorDialog(this.item, perk, idx);
-    dialog.render(true);
-  }
-
-  static async _onDeletePerk(event, target) {
-    const idx   = Number(target.dataset.perkIndex);
-    const perks = foundry.utils.deepClone(this.item.system.perks ?? []);
-    const perk  = perks[idx];
-    if (!perk) return;
-    const confirm = await Dialog.confirm({
-      title:   "Delete Perk",
-      content: `<p>Delete perk "<strong>${perk.label}</strong>"? This cannot be undone.</p>`,
-    });
-    if (!confirm) return;
-    perks.splice(idx, 1);
-    await this.item.update({ "system.perks": perks });
-  }
-
 }
