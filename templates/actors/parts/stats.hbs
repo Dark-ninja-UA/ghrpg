@@ -1,0 +1,125 @@
+{{!-- templates/actors/parts/stats.hbs --}}
+<section class="tab sheet-body" data-tab="stats" data-group="sheet">
+
+  {{!-- ─── Attributes ─── --}}
+  <div class="section-block attributes-section">
+    <h2 class="section-title">Attributes</h2>
+    <div class="attributes-grid">
+      {{#each attributes}}
+      <div class="attribute-item" data-attribute="{{key}}">
+        <div class="attr-header">
+          <span class="attr-abbr">{{abbr}}</span>
+          <span class="attr-label">{{label}}</span>
+        </div>
+        <div class="attr-body">
+          <input class="attr-value" type="number"
+                 name="system.attributes.{{key}}.value"
+                 value="{{value}}" min="0" max="7" />
+          <button type="button" class="attr-roll-btn"
+                  data-action="rollAttribute"
+                  data-attribute="{{key}}"
+                  title="Roll {{label}} test">
+            <i class="fas fa-dice"></i>
+          </button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{!-- ─── Conditions ─── --}}
+  <div class="section-block conditions-section">
+    <h2 class="section-title">Conditions</h2>
+    <div class="conditions-row">
+      <div class="conditions-group">
+        <span class="cond-group-label positive-label">Positive</span>
+        {{#each conditions.positive}}
+        <button type="button"
+                class="condition-btn {{#if active}}active{{/if}}"
+                data-action="toggleCondition"
+                data-condition="{{key}}"
+                title="{{label}}{{#if (eq key 'bless')}} ({{../system.conditions.bless.count}}/6){{/if}}">
+          <span class="cond-icon">
+            {{#if (eq key "bless")}}✦{{/if}}
+            {{#if (eq key "invisible")}}👁{{/if}}
+            {{#if (eq key "regenerate")}}⊕{{/if}}
+            {{#if (eq key "safeguard")}}🛡{{/if}}
+            {{#if (eq key "strengthen")}}💪{{/if}}
+            {{#if (eq key "ward")}}⬡{{/if}}
+          </span>
+          <span class="cond-label">{{label}}</span>
+        </button>
+        {{/each}}
+      </div>
+      <div class="conditions-group negative-group">
+        <span class="cond-group-label negative-label">Negative</span>
+        {{#each conditions.negative}}
+        <button type="button"
+                class="condition-btn negative {{#if active}}active{{/if}}"
+                data-action="toggleCondition"
+                data-condition="{{key}}"
+                title="{{label}}">
+          <span class="cond-icon">
+            {{#if (eq key "curse")}}✧{{/if}}
+            {{#if (eq key "immobilize")}}⚓{{/if}}
+            {{#if (eq key "muddle")}}💀{{/if}}
+            {{#if (eq key "pacify")}}☮{{/if}}
+            {{#if (eq key "poison")}}☠{{/if}}
+            {{#if (eq key "stun")}}⚡{{/if}}
+            {{#if (eq key "wound")}}🩸{{/if}}
+          </span>
+          <span class="cond-label">{{label}}</span>
+        </button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  {{!-- ─── Backgrounds ─── --}}
+  <div class="section-block backgrounds-section">
+    <h2 class="section-title">
+      Backgrounds
+      <button type="button" class="add-btn" data-action="createItem" data-type="background" title="Add Background">
+        <i class="fas fa-plus"></i>
+      </button>
+    </h2>
+    {{#if backgrounds.length}}
+    <div class="items-list">
+      {{#each backgrounds}}
+      <div class="item-row background-row" data-item-id="{{id}}">
+        <div class="item-name">
+          <span class="item-tag {{#if system.master}}master-bg{{/if}}">{{#if system.master}}M{{else}}{{capitalize system.category}}{{/if}}</span>
+          {{name}}
+        </div>
+        <div class="item-desc">{{system.description}}</div>
+        <div class="item-controls">
+          <span class="expend-status {{#if system.expended}}expended{{/if}}">
+            {{#if system.expended}}Expended{{else}}+{{system.bonus}}{{/if}}
+          </span>
+          <button type="button" class="btn-icon" data-action="editItem" title="Edit"><i class="fas fa-pen"></i></button>
+          <button type="button" class="btn-icon btn-danger" data-action="deleteItem" title="Delete"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p class="empty-notice">No backgrounds yet. <a data-action="createItem" data-type="background">Add one.</a></p>
+    {{/if}}
+  </div>
+
+  {{!-- ─── Rest Controls ─── --}}
+  <div class="section-block rest-section">
+    <h2 class="section-title">Resting</h2>
+    <div class="rest-buttons">
+      <div class="rest-btn quick-breath-btn" data-action="quickBreath" role="button" tabindex="0">
+        <div class="rest-btn-title"><i class="fas fa-wind"></i> Quick Breath</div>
+        <div class="rest-desc">Recover expended (non-lost) skills</div>
+      </div>
+      <div class="rest-btn full-rest-btn" data-action="fullRest" role="button" tabindex="0">
+        <div class="rest-btn-title"><i class="fas fa-campfire"></i> Full Rest</div>
+        <div class="rest-desc">Recover all skills, reshuffle deck, restore HP</div>
+      </div>
+    </div>
+  </div>
+
+</section>

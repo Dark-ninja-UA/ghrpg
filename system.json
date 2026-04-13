@@ -1,0 +1,33 @@
+{
+  "id": "ghrpg",
+  "title": "Gloomhaven: The Roleplaying Game",
+  "description": "An unofficial Foundry VTT system for Gloomhaven: The Roleplaying Game by Cephalofair Games.",
+  "version": "0.1.30",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13",
+    "maximum": "13"
+  },
+  "authors": [
+    {
+      "name": "Custom Build"
+    }
+  ],
+  "esmodules": [
+    "module/ghrpg.mjs"
+  ],
+  "styles": [
+    "styles/ghrpg.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "socket": true,
+  "url": "https://github.com/Dark-ninja-UA/ghrpg",
+  "manifest": "https://raw.githubusercontent.com/Dark-ninja-UA/ghrpg/main/system.json",
+  "download": "https://github.com/Dark-ninja-UA/ghrpg/releases/latest/download/ghrpg.zip"
+}
