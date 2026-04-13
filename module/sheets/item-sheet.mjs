@@ -1,6 +1,5 @@
 /**
  * item-sheet.mjs — GHRPGItemSheet, Foundry v13
- * Fixed: extends resolved at class body parse time (not top-level destructure)
  */
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -9,10 +8,13 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
 
   static DEFAULT_OPTIONS = {
     classes: ["ghrpg", "sheet", "item"],
-    position: { width: 520, height: 480 },
+    position: { width: 520, height: 560 },
     window: { resizable: true },
     form:   { submitOnChange: true, closeOnSubmit: false },
-    actions: {}
+    actions: {
+      unlinkSkill:  GHRPGItemSheet._onUnlinkSkill,
+      unlinkTalent: GHRPGItemSheet._onUnlinkTalent,
+    }
   };
 
   static PARTS = {
@@ -26,16 +28,65 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
 
   _onRender(context, options) {
     super._onRender(context, options);
-    // Auto-save all form inputs on change (Foundry v13 ApplicationV2 doesn't do this automatically)
     const el = this.element;
     el.querySelectorAll("input, select, textarea").forEach(input => {
-      const evt = (input.tagName === "SELECT" || input.type === "checkbox") ? "change" : "change";
-      input.addEventListener(evt, () => this._saveField(input));
+      input.addEventListener("change", () => this._saveField(input));
     });
+
+    // Drop zones for ancestry skill/talent linking
+    if (this.item.type === "ancestry") {
+      el.querySelectorAll(".ancestry-link-drop").forEach(zone => {
+        zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("drag-over"); });
+        zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+        zone.addEventListener("drop", e => {
+          zone.classList.remove("drag-over");
+          this._onDropLink(e, zone.dataset.dropType);
+        });
+      });
+    }
+  }
+
+  async _onDropLink(event, dropType) {
+    let data;
+    try { data = JSON.parse(event.dataTransfer.getData("text/plain")); } catch { return; }
+    if (data.type !== "Item") return;
+
+    const dropped = await fromUuid(data.uuid);
+    if (!dropped) return;
+
+    const expectedType = dropType; // "skill" or "talent"
+    if (dropped.type !== expectedType) {
+      ui.notifications.warn(`Expected a ${expectedType} item.`);
+      return;
+    }
+
+    const field   = dropType === "skill" ? "system.skillIds" : "system.talentIds";
+    const current = dropType === "skill"
+      ? (this.item.system.skillIds ?? [])
+      : (this.item.system.talentIds ?? []);
+
+    if (current.includes(dropped.id)) {
+      ui.notifications.info(`${dropped.name} is already linked.`);
+      return;
+    }
+
+    await this.item.update({ [field]: [...current, dropped.id] });
+  }
+
+  static async _onUnlinkSkill(event, target) {
+    const id      = target.dataset.itemId;
+    const current = this.item.system.skillIds ?? [];
+    await this.item.update({ "system.skillIds": current.filter(x => x !== id) });
+  }
+
+  static async _onUnlinkTalent(event, target) {
+    const id      = target.dataset.itemId;
+    const current = this.item.system.talentIds ?? [];
+    await this.item.update({ "system.talentIds": current.filter(x => x !== id) });
   }
 
   async _saveField(input) {
-    const name  = input.name;
+    const name = input.name;
     if (!name) return;
     let value;
     if (input.type === "checkbox") value = input.checked;
@@ -49,6 +100,15 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
     const item    = this.item;
     const system  = item.system;
 
+    // Resolve linked skill/talent items for ancestry sheet
+    let linkedSkills  = [];
+    let linkedTalents = [];
+    if (item.type === "ancestry") {
+      const allItems = game.items ?? [];
+      linkedSkills  = (system.skillIds  ?? []).map(id => allItems.get(id)).filter(Boolean);
+      linkedTalents = (system.talentIds ?? []).map(id => allItems.get(id)).filter(Boolean);
+    }
+
     return {
       ...context,
       item, system,
@@ -61,6 +121,9 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
       isTalent:        item.type === "talent",
       isBackground:    item.type === "background",
       isEquipment:     item.type === "equipment",
+      isAncestry:      item.type === "ancestry",
+      linkedSkills,
+      linkedTalents,
     };
   }
 }

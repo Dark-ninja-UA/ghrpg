@@ -1244,3 +1244,49 @@
 }
 .portrait-wrap:hover .portrait-token-btn { opacity: 1; }
 .portrait-token-btn:hover { background: rgba(0,0,0,0.85); border-color: #ccaa44; }
+
+/* ─── Ancestry Item Sheet ────────────────────────────────────── */
+.ancestry-form { display: flex; flex-direction: column; gap: 12px; padding: 8px; }
+
+.ancestry-links-section {
+  border: 1px solid var(--ghrpg-border); border-radius: var(--radius);
+  padding: 8px 10px; background: var(--ghrpg-bg-panel);
+}
+.ancestry-links-title {
+  font-size: 12px; color: var(--ghrpg-gold-light); margin: 0 0 6px;
+  display: flex; align-items: center; gap: 6px;
+}
+.ancestry-link-hint { font-size: 10px; color: var(--ghrpg-text-muted); font-weight: normal; margin-left: auto; }
+
+.ancestry-link-list { display: flex; flex-direction: column; gap: 3px; margin-bottom: 6px; }
+.ancestry-link-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 6px; background: var(--ghrpg-bg-item); border-radius: var(--radius);
+}
+.ancestry-link-img { width: 20px; height: 20px; border-radius: 3px; object-fit: cover; }
+.ancestry-link-name { flex: 1; font-size: 12px; }
+
+.ancestry-empty-hint { font-size: 11px; color: var(--ghrpg-text-muted); font-style: italic; margin: 0 0 6px; }
+
+.ancestry-link-drop {
+  border: 1px dashed var(--ghrpg-border-gold); border-radius: var(--radius);
+  padding: 6px 10px; text-align: center; font-size: 11px;
+  color: var(--ghrpg-gold); cursor: default; transition: background 0.15s;
+}
+.ancestry-link-drop.drag-over { background: rgba(180,140,60,0.15); border-style: solid; }
+
+/* ─── Ancestry badges on Skills tab ─────────────────────────── */
+.ancestry-banner {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 10px; margin-bottom: 6px;
+  background: rgba(180,140,60,0.08); border: 1px solid rgba(180,140,60,0.2);
+  border-radius: var(--radius); font-size: 11px; color: var(--ghrpg-text-muted);
+}
+.ancestry-banner-empty { color: var(--ghrpg-text-muted); font-style: italic; }
+.ancestry-banner-name { font-weight: bold; color: var(--ghrpg-gold-light); }
+.ancestry-banner-hint { font-size: 10px; }
+
+.ancestry-link-badge {
+  font-size: 10px; color: var(--ghrpg-gold);
+  margin-left: 3px; opacity: 0.85;
+}

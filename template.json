@@ -1,6 +1,9 @@
 {
   "Actor": {
-    "types": ["character", "npc"],
+    "types": [
+      "character",
+      "npc"
+    ],
     "templates": {
       "common": {
         "biography": "",
@@ -8,7 +11,9 @@
       }
     },
     "character": {
-      "templates": ["common"],
+      "templates": [
+        "common"
+      ],
       "class": "",
       "ancestry": "",
       "level": 1,
@@ -16,12 +21,24 @@
       "personalQuest": "",
       "gold": 0,
       "attributes": {
-        "cunning":      { "value": 0 },
-        "finesse":      { "value": 0 },
-        "grit":         { "value": 0 },
-        "intuition":    { "value": 0 },
-        "logic":        { "value": 0 },
-        "understanding":{ "value": 0 }
+        "cunning": {
+          "value": 0
+        },
+        "finesse": {
+          "value": 0
+        },
+        "grit": {
+          "value": 0
+        },
+        "intuition": {
+          "value": 0
+        },
+        "logic": {
+          "value": 0
+        },
+        "understanding": {
+          "value": 0
+        }
       },
       "hp": {
         "value": 10,
@@ -29,26 +46,54 @@
         "min": 0
       },
       "conditions": {
-        "bless":      { "active": false, "count": 0 },
-        "curse":      { "active": false, "count": 0 },
-        "invisible":  { "active": false },
-        "regenerate": { "active": false },
-        "safeguard":  { "active": false },
-        "strengthen": { "active": false },
-        "ward":       { "active": false },
-        "immobilize": { "active": false },
-        "muddle":     { "active": false },
-        "pacify":     { "active": false },
-        "poison":     { "active": false },
-        "stun":       { "active": false },
-        "wound":      { "active": false }
+        "bless": {
+          "active": false,
+          "count": 0
+        },
+        "curse": {
+          "active": false,
+          "count": 0
+        },
+        "invisible": {
+          "active": false
+        },
+        "regenerate": {
+          "active": false
+        },
+        "safeguard": {
+          "active": false
+        },
+        "strengthen": {
+          "active": false
+        },
+        "ward": {
+          "active": false
+        },
+        "immobilize": {
+          "active": false
+        },
+        "muddle": {
+          "active": false
+        },
+        "pacify": {
+          "active": false
+        },
+        "poison": {
+          "active": false
+        },
+        "stun": {
+          "active": false
+        },
+        "wound": {
+          "active": false
+        }
       },
       "elements": {
-        "air":   "inert",
-        "dark":  "inert",
+        "air": "inert",
+        "dark": "inert",
         "earth": "inert",
-        "fire":  "inert",
-        "ice":   "inert",
+        "fire": "inert",
+        "ice": "inert",
         "light": "inert"
       },
       "modifierDeck": {
@@ -62,7 +107,9 @@
       "initiative": 0
     },
     "npc": {
-      "templates": ["common"],
+      "templates": [
+        "common"
+      ],
       "npcType": "normal",
       "move": 2,
       "attack": 2,
@@ -72,27 +119,67 @@
         "min": 0
       },
       "attributes": {
-        "cunning":      { "value": 0 },
-        "finesse":      { "value": 0 },
-        "grit":         { "value": 0 },
-        "intuition":    { "value": 0 },
-        "logic":        { "value": 0 },
-        "understanding":{ "value": 0 }
+        "cunning": {
+          "value": 0
+        },
+        "finesse": {
+          "value": 0
+        },
+        "grit": {
+          "value": 0
+        },
+        "intuition": {
+          "value": 0
+        },
+        "logic": {
+          "value": 0
+        },
+        "understanding": {
+          "value": 0
+        }
       },
       "conditions": {
-        "bless":      { "active": false, "count": 0 },
-        "curse":      { "active": false, "count": 0 },
-        "invisible":  { "active": false },
-        "regenerate": { "active": false },
-        "safeguard":  { "active": false },
-        "strengthen": { "active": false },
-        "ward":       { "active": false },
-        "immobilize": { "active": false },
-        "muddle":     { "active": false },
-        "pacify":     { "active": false },
-        "poison":     { "active": false },
-        "stun":       { "active": false },
-        "wound":      { "active": false }
+        "bless": {
+          "active": false,
+          "count": 0
+        },
+        "curse": {
+          "active": false,
+          "count": 0
+        },
+        "invisible": {
+          "active": false
+        },
+        "regenerate": {
+          "active": false
+        },
+        "safeguard": {
+          "active": false
+        },
+        "strengthen": {
+          "active": false
+        },
+        "ward": {
+          "active": false
+        },
+        "immobilize": {
+          "active": false
+        },
+        "muddle": {
+          "active": false
+        },
+        "pacify": {
+          "active": false
+        },
+        "poison": {
+          "active": false
+        },
+        "stun": {
+          "active": false
+        },
+        "wound": {
+          "active": false
+        }
       },
       "modifierDeck": {
         "deck": [],
@@ -103,7 +190,13 @@
     }
   },
   "Item": {
-    "types": ["skill", "talent", "background", "equipment"],
+    "types": [
+      "skill",
+      "talent",
+      "background",
+      "equipment",
+      "ancestry"
+    ],
     "templates": {},
     "skill": {
       "level": 1,
@@ -151,6 +244,12 @@
       "expended": false,
       "description": "",
       "craftingType": ""
+    },
+    "ancestry": {
+      "description": "",
+      "traits": "",
+      "skillIds": [],
+      "talentIds": []
     }
   }
 }

@@ -180,5 +180,80 @@
   </div>
   {{/if}}
 
+  {{!-- ─── ANCESTRY ─── --}}
+  {{#if isAncestry}}
+  <div class="ancestry-form">
+
+    <div class="form-group">
+      <label>Traits & Passives</label>
+      <textarea name="system.traits" class="action-textarea"
+                placeholder="e.g. Darkvision. You can see in darkness up to 30 feet.">{{system.traits}}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="system.description" class="bio-textarea"
+                placeholder="Describe this ancestry…">{{system.description}}</textarea>
+    </div>
+
+    {{!-- Linked Skills --}}
+    <div class="ancestry-links-section">
+      <h3 class="ancestry-links-title">
+        <i class="fas fa-scroll"></i> Ancestry Skills
+        <span class="ancestry-link-hint">Link skills that belong to this ancestry</span>
+      </h3>
+
+      {{#if linkedSkills.length}}
+      <div class="ancestry-link-list">
+        {{#each linkedSkills}}
+        <div class="ancestry-link-row">
+          <img class="ancestry-link-img" src="{{img}}" />
+          <span class="ancestry-link-name">{{name}}</span>
+          <button type="button" class="btn-icon btn-danger" data-action="unlinkSkill" data-item-id="{{id}}" title="Remove link">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="ancestry-empty-hint">No skills linked yet. Drag a Skill item here, or use the button below.</p>
+      {{/if}}
+
+      <div class="ancestry-link-drop" data-drop-type="skill">
+        <i class="fas fa-plus-circle"></i> Drop a Skill here to link it
+      </div>
+    </div>
+
+    {{!-- Linked Talents --}}
+    <div class="ancestry-links-section">
+      <h3 class="ancestry-links-title">
+        <i class="fas fa-star"></i> Ancestry Talents
+        <span class="ancestry-link-hint">Link talents that belong to this ancestry</span>
+      </h3>
+
+      {{#if linkedTalents.length}}
+      <div class="ancestry-link-list">
+        {{#each linkedTalents}}
+        <div class="ancestry-link-row">
+          <img class="ancestry-link-img" src="{{img}}" />
+          <span class="ancestry-link-name">{{name}}</span>
+          <button type="button" class="btn-icon btn-danger" data-action="unlinkTalent" data-item-id="{{id}}" title="Remove link">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="ancestry-empty-hint">No talents linked yet. Drop a Talent item here.</p>
+      {{/if}}
+
+      <div class="ancestry-link-drop" data-drop-type="talent">
+        <i class="fas fa-plus-circle"></i> Drop a Talent here to link it
+      </div>
+    </div>
+
+  </div>
+  {{/if}}
+
 </div>
 </div>

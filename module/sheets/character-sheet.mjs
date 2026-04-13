@@ -208,7 +208,15 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
     const backgrounds = actor.items.filter(i => i.type === "background");
     const equipment   = actor.items.filter(i => i.type === "equipment");
 
-    const ancestryOptions = ["","harrower","human","inox","orchid","quatryl","savvas","valrath","vermling"];
+    // Build ancestry options dynamically from world Ancestry items
+    const ancestryItems = game.items.filter(i => i.type === "ancestry").sort((a,b) => a.name.localeCompare(b.name));
+    const ancestryOptions = { "": "— Select Ancestry —" };
+    for (const a of ancestryItems) ancestryOptions[a.id] = a.name;
+
+    // Resolve selected ancestry item for skills tab
+    const selectedAncestry = system.ancestry ? game.items.get(system.ancestry) : null;
+    const ancestrySkillIds  = selectedAncestry?.system?.skillIds  ?? [];
+    const ancestryTalentIds = selectedAncestry?.system?.talentIds ?? [];
     const classOptions    = ["","berserker","bladeswarm","bruiser","cragheart","doomstalker","elementalist",
                              "mindthief","plagueherald","quartermaster","sawbones","silentknife",
                              "soothsinger","spellweaver","sunkeeper","tinkerer","wildfury"];
@@ -238,6 +246,7 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       activeTab,
       tabs,
       ancestryOptions, classOptions, factionOptions,
+      selectedAncestry, ancestrySkillIds, ancestryTalentIds,
       isOwner: actor.isOwner,
       isGM:    game.user.isGM,
       hpPct:   Math.round((system.hp.value / (system.hp.max || 1)) * 100),

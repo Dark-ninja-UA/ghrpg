@@ -1,6 +1,19 @@
 {{!-- templates/actors/parts/skills.hbs --}}
 <section class="tab sheet-body" data-tab="skills" data-group="sheet">
 
+  {{!-- Ancestry info banner --}}
+  {{#if selectedAncestry}}
+  <div class="ancestry-banner">
+    <i class="fas fa-dna"></i>
+    <span class="ancestry-banner-name">{{selectedAncestry.name}}</span>
+    <span class="ancestry-banner-hint">— ancestry skills are marked with <i class="fas fa-dna"></i></span>
+  </div>
+  {{else}}
+  <div class="ancestry-banner ancestry-banner-empty">
+    <i class="fas fa-dna"></i> No ancestry selected — set one in the header to see ancestry skills.
+  </div>
+  {{/if}}
+
   <div class="skills-header">
     <h2 class="section-title">
       Skills
@@ -46,6 +59,7 @@
           <span class="skill-source-badge {{system.sourceType}}">
             {{#if (eq system.sourceType "ancestry")}}A{{else}}C{{/if}}
           </span>
+          {{#if (includes ../ancestrySkillIds id)}}<span class="ancestry-link-badge" title="Linked to {{../selectedAncestry.name}}"><i class="fas fa-dna"></i></span>{{/if}}
           {{#if system.lost}}<span class="lost-badge">LOST</span>{{/if}}
           {{#if system.expended}}<span class="expended-badge">Expended</span>{{/if}}
         </div>
