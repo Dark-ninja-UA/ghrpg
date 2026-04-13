@@ -1,7 +1,6 @@
 {{!-- templates/apps/perk-editor.hbs --}}
 <div class="perk-editor-body">
 
-  {{!-- Label & max times --}}
   <div class="perk-editor-row">
     <div class="form-group" style="flex:1">
       <label>Perk Label</label>
@@ -14,7 +13,6 @@
     </div>
   </div>
 
-  {{!-- Remove cards --}}
   <div class="perk-section">
     <h3 class="perk-section-title"><i class="fas fa-minus-circle"></i> Remove from Base Deck</h3>
     <div class="remove-cards-grid">
@@ -28,59 +26,58 @@
     </div>
   </div>
 
-  {{!-- Add cards --}}
   <div class="perk-section">
     <h3 class="perk-section-title"><i class="fas fa-plus-circle"></i> Add Cards to Deck</h3>
 
     {{#each perk.addCards}}
-    <div class="perk-add-card" data-card-index="{{@index}}">
+    <div class="perk-add-card">
       <div class="perk-card-header">
-        <span class="perk-card-num">Card {{math @index "+" 1}}</span>
-        <button type="button" class="btn-icon btn-danger" data-action="removeCard" data-card-index="{{@index}}" title="Remove card">
+        <span class="perk-card-num">Card {{math cardIndex "+" 1}}</span>
+        <button type="button" class="btn-icon btn-danger" data-action="removeCard"
+                data-card-index="{{cardIndex}}" title="Remove card">
           <i class="fas fa-times"></i>
         </button>
       </div>
-
       <div class="perk-editor-row">
         <div class="form-group narrow">
           <label>Atk Mod</label>
-          <input type="number" data-perk-field="addCards.{{@index}}.atkMod" value="{{atkMod}}" />
+          <input type="number" data-perk-field="addCards.{{cardIndex}}.atkMod" value="{{atkMod}}" />
         </div>
         <div class="form-group narrow">
           <label>Attr Mod</label>
-          <input type="number" data-perk-field="addCards.{{@index}}.attrMod" value="{{attrMod}}" />
+          <input type="number" data-perk-field="addCards.{{cardIndex}}.attrMod" value="{{attrMod}}" />
         </div>
         <div class="form-group" style="flex:1">
           <label>Flavor Text</label>
-          <input type="text" data-perk-field="addCards.{{@index}}.flavor" value="{{flavor}}"
+          <input type="text" data-perk-field="addCards.{{cardIndex}}.flavor" value="{{flavor}}"
                  placeholder="e.g. Gain Invisible" />
         </div>
       </div>
-
-      {{!-- Effects --}}
       <div class="perk-effects-list">
         {{#each effects}}
         <div class="perk-effect-row">
-          <select data-perk-field="addCards.{{../@index}}.effects.{{@index}}.type" style="width:110px">
+          <select data-perk-field="addCards.{{cardIndex}}.effects.{{effectIndex}}.type" style="width:110px">
             {{#each ../../../effectTypes}}
             <option value="{{this}}" {{#if (eq this ../type)}}selected{{/if}}>{{capitalize this}}</option>
             {{/each}}
           </select>
-          <input type="number" data-perk-field="addCards.{{../@index}}.effects.{{@index}}.value"
+          <input type="number" data-perk-field="addCards.{{cardIndex}}.effects.{{effectIndex}}.value"
                  value="{{value}}" placeholder="value" style="width:60px" />
           <label class="perk-opt-label">
-            <input type="checkbox" data-perk-field="addCards.{{../@index}}.effects.{{@index}}.optional"
+            <input type="checkbox"
+                   data-perk-field="addCards.{{cardIndex}}.effects.{{effectIndex}}.optional"
                    {{#if optional}}checked{{/if}} />
             Optional
           </label>
           <button type="button" class="btn-icon btn-danger" data-action="removeEffect"
-                  data-card-index="{{../@index}}" data-effect-index="{{@index}}" title="Remove effect">
+                  data-card-index="{{cardIndex}}" data-effect-index="{{effectIndex}}">
             <i class="fas fa-times"></i>
           </button>
         </div>
         {{/each}}
-        <button type="button" class="add-btn" data-action="addEffect" data-card-index="{{@../index}}"
-                style="font-size:10px; padding:2px 8px; margin-top:3px">
+        <button type="button" class="add-btn" data-action="addEffect"
+                data-card-index="{{cardIndex}}"
+                style="font-size:10px;padding:2px 8px;margin-top:3px">
           <i class="fas fa-plus"></i> Add Effect
         </button>
       </div>
@@ -92,7 +89,6 @@
     </button>
   </div>
 
-  {{!-- Actions --}}
   <div class="perk-editor-actions">
     <button type="button" class="card-restore-btn" data-action="savePerk">
       <i class="fas fa-save"></i> Save Perk

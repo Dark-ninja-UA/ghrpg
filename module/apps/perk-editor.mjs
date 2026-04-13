@@ -76,9 +76,15 @@ export class PerkEditorDialog extends HandlebarsApplicationMixin(ApplicationV2) 
 
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
+    // Embed card and effect indices so template doesn't need ../@index
+    const addCards = (this.perkData.addCards ?? []).map((card, ci) => ({
+      ...card,
+      cardIndex: ci,
+      effects: (card.effects ?? []).map((eff, ei) => ({ ...eff, cardIndex: ci, effectIndex: ei }))
+    }));
     return {
       ...context,
-      perk:          this.perkData,
+      perk:          { ...this.perkData, addCards },
       baseDeckCards: BASE_DECK_REMOVABLE,
       effectTypes:   EFFECT_TYPES,
     };
