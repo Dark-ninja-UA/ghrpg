@@ -120,7 +120,22 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
     if (input.type === "checkbox") value = input.checked;
     else if (input.type === "number") value = input.value === "" ? null : Number(input.value);
     else value = input.value;
-    await this.actor.update({ [name]: value });
+
+    // Detect ancestry / class change before saving
+    const isAncestry = name === "system.ancestry";
+    const isClass    = name === "system.class";
+
+    if (isAncestry || isClass) {
+      const field     = isAncestry ? "ancestry" : "class";
+      const oldId     = this.actor.system[field] ?? "";
+      const newId     = value ?? "";
+      await this.actor.update({ [name]: value });
+      if (oldId !== newId) {
+        await this.actor.syncSourceItems(field, oldId, newId);
+      }
+    } else {
+      await this.actor.update({ [name]: value });
+    }
   }
 
   async _prepareContext(options) {

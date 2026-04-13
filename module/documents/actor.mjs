@@ -580,6 +580,63 @@ export class GHRPGActor extends Actor {
    *  Quick Breath / Full Rest
    * ----------------------------------------*/
 
+  /** ----------------------------------------
+   *  Ancestry / Class Sync
+   * ----------------------------------------*/
+
+  /**
+   * Sync skills and talents from a source item (ancestry or class) onto this actor.
+   * Called when system.ancestry or system.class changes.
+   *
+   * @param {string} field        - "ancestry" or "class"
+   * @param {string} oldSourceId  - previous item id (or "")
+   * @param {string} newSourceId  - new item id (or "")
+   */
+  async syncSourceItems(field, oldSourceId, newSourceId) {
+    // 1. Remove items tagged with the old source
+    if (oldSourceId) {
+      const toRemove = this.items.filter(i =>
+        (i.type === "skill" || i.type === "talent") &&
+        i.system.sourceId === oldSourceId
+      );
+      if (toRemove.length) {
+        await this.deleteEmbeddedDocuments("Item", toRemove.map(i => i.id));
+      }
+    }
+
+    // 2. Add items from the new source
+    if (newSourceId) {
+      const sourceItem = game.items.get(newSourceId);
+      if (!sourceItem) return;
+
+      const skillIds  = sourceItem.system.skillIds  ?? [];
+      const talentIds = sourceItem.system.talentIds ?? [];
+      const allIds    = [...skillIds, ...talentIds];
+
+      const toCreate = [];
+      for (const id of allIds) {
+        const worldItem = game.items.get(id);
+        if (!worldItem) continue;
+
+        // Skip if name already exists on this actor
+        const exists = this.items.some(i => i.name === worldItem.name);
+        if (exists) continue;
+
+        const data = worldItem.toObject();
+        data.system.sourceId = newSourceId;
+        toCreate.push(data);
+      }
+
+      if (toCreate.length) {
+        await this.createEmbeddedDocuments("Item", toCreate);
+      }
+
+      ui.notifications.info(
+        `${this.name}: synced ${toCreate.length} item(s) from ${sourceItem.name}.`
+      );
+    }
+  }
+
   /** Quick Breath: recover expended (non-lost) skills */
   async quickBreath() {
     const items = this.items.filter(i => i.type === "skill" && i.system.expended && !i.system.lost);

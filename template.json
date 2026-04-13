@@ -210,7 +210,8 @@
       "prepared": false,
       "description": "",
       "elements": [],
-      "noExpend": false
+      "noExpend": false,
+      "sourceId": ""
     },
     "talent": {
       "level": 1,
@@ -221,7 +222,8 @@
       "description": "",
       "upgradeLevel": 5,
       "upgradesTo": "",
-      "noExpend": false
+      "noExpend": false,
+      "sourceId": ""
     },
     "background": {
       "category": "occupation",
