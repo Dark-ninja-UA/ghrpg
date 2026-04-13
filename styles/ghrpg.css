@@ -1307,3 +1307,39 @@
 .gm-no-draw { text-align: center; color: var(--ghrpg-text-muted); font-size: 12px; padding: 16px; }
 .bless-chip { color: #ffcc44; border-color: #886600; }
 .curse-chip { color: #cc88ff; border-color: #7744aa; }
+
+/* ─── Class Item Sheet ───────────────────────────────────────── */
+.class-attr-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+  padding: 4px 0;
+}
+.class-attr-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.class-attr-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--ghrpg-text-muted); text-align: center;
+}
+.class-attr-input {
+  width: 52px; text-align: center; font-size: 16px; font-weight: bold;
+  color: var(--ghrpg-gold-light); background: var(--ghrpg-bg-panel);
+  border: 1px solid var(--ghrpg-border); border-radius: var(--radius); padding: 2px;
+}
+.ancestry-link-meta { font-size: 10px; color: var(--ghrpg-text-muted); margin-left: auto; margin-right: 6px; }
+
+/* ─── Perks TBD Placeholder ──────────────────────────────────── */
+.class-perks-placeholder { position: relative; }
+.perks-tbd-overlay { position: relative; }
+.perks-tbd-label {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 900; color: rgba(120,100,60,0.35);
+  letter-spacing: 8px; text-transform: uppercase; pointer-events: none; z-index: 2;
+}
+.perks-tbd-rows { display: flex; flex-direction: column; gap: 4px; opacity: 0.3; pointer-events: none; }
+.perks-tbd-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px; background: var(--ghrpg-bg-item); border-radius: var(--radius);
+}
+.perks-tbd-check {
+  width: 14px; height: 14px; border-radius: 3px;
+  border: 1px solid var(--ghrpg-border); background: var(--ghrpg-bg-panel); flex-shrink: 0;
+}
+.perks-tbd-text { font-size: 11px; color: var(--ghrpg-text-muted); }

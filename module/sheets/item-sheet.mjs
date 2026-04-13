@@ -33,8 +33,8 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
       input.addEventListener("change", () => this._saveField(input));
     });
 
-    // Drop zones for ancestry skill/talent linking
-    if (this.item.type === "ancestry") {
+    // Drop zones for ancestry and class skill/talent linking
+    if (this.item.type === "ancestry" || this.item.type === "class") {
       el.querySelectorAll(".ancestry-link-drop").forEach(zone => {
         zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("drag-over"); });
         zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
@@ -100,10 +100,10 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
     const item    = this.item;
     const system  = item.system;
 
-    // Resolve linked skill/talent items for ancestry sheet
+    // Resolve linked skill/talent items for ancestry and class sheets
     let linkedSkills  = [];
     let linkedTalents = [];
-    if (item.type === "ancestry") {
+    if (item.type === "ancestry" || item.type === "class") {
       const allItems = game.items ?? [];
       linkedSkills  = (system.skillIds  ?? []).map(id => allItems.get(id)).filter(Boolean);
       linkedTalents = (system.talentIds ?? []).map(id => allItems.get(id)).filter(Boolean);
@@ -122,8 +122,10 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
       isBackground:    item.type === "background",
       isEquipment:     item.type === "equipment",
       isAncestry:      item.type === "ancestry",
+      isClass:         item.type === "class",
       linkedSkills,
       linkedTalents,
+      startingAttributes: item.type === "class" ? system.startingAttributes : null,
     };
   }
 }

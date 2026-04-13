@@ -57,6 +57,14 @@ export function registerHandlebarsHelpers() {
   });
 
   Handlebars.registerHelper("includes", (arr, val) => Array.isArray(arr) && arr.includes(val));
+  Handlebars.registerHelper("math", (a, op, b) => {
+    const x = Number(a), y = Number(b);
+    if (op === "+") return x + y;
+    if (op === "-") return x - y;
+    if (op === "*") return x * y;
+    if (op === "/") return x / y;
+    return x;
+  });
 
   // Filter an array by a property value: {{filter items type="skill"}}
   Handlebars.registerHelper("filter", (arr, options) => {

@@ -217,9 +217,16 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
     const selectedAncestry = system.ancestry ? game.items.get(system.ancestry) : null;
     const ancestrySkillIds  = selectedAncestry?.system?.skillIds  ?? [];
     const ancestryTalentIds = selectedAncestry?.system?.talentIds ?? [];
-    const classOptions    = ["","berserker","bladeswarm","bruiser","cragheart","doomstalker","elementalist",
-                             "mindthief","plagueherald","quartermaster","sawbones","silentknife",
-                             "soothsinger","spellweaver","sunkeeper","tinkerer","wildfury"];
+    // Build class options dynamically from world Class items
+    const classItems   = game.items.filter(i => i.type === "class").sort((a,b) => a.name.localeCompare(b.name));
+    const classOptions = { "": "— Select Class —" };
+    for (const c of classItems) classOptions[c.id] = c.name;
+
+    // Resolve selected class item for skills tab filtering (future use)
+    const selectedClass      = system.class ? game.items.get(system.class) : null;
+    const classSkillIds      = selectedClass?.system?.skillIds  ?? [];
+    const classTalentIds     = selectedClass?.system?.talentIds ?? [];
+    const classStartingAttrs = selectedClass?.system?.startingAttributes ?? null;
     const factionOptions  = ["","keepers","guild","freebooters","shields","sect","university","robins"];
 
     const activeTab = this.tabGroups.sheet ?? "stats";
@@ -247,6 +254,7 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       tabs,
       ancestryOptions, classOptions, factionOptions,
       selectedAncestry, ancestrySkillIds, ancestryTalentIds,
+      selectedClass, classSkillIds, classTalentIds, classStartingAttrs,
       isOwner: actor.isOwner,
       isGM:    game.user.isGM,
       hpPct:   Math.round((system.hp.value / (system.hp.max || 1)) * 100),

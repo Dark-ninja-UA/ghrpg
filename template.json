@@ -195,7 +195,8 @@
       "talent",
       "background",
       "equipment",
-      "ancestry"
+      "ancestry",
+      "class"
     ],
     "templates": {},
     "skill": {
@@ -250,6 +251,19 @@
     "ancestry": {
       "description": "",
       "traits": "",
+      "skillIds": [],
+      "talentIds": []
+    },
+    "class": {
+      "description": "",
+      "startingAttributes": {
+        "cunning": 0,
+        "finesse": 0,
+        "grit": 0,
+        "intuition": 0,
+        "logic": 0,
+        "understanding": 0
+      },
       "skillIds": [],
       "talentIds": []
     }

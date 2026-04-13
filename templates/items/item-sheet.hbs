@@ -261,5 +261,106 @@
   </div>
   {{/if}}
 
+  {{!-- ─── CLASS ─── --}}
+  {{#if isClass}}
+  <div class="ancestry-form">
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="system.description" class="bio-textarea"
+                placeholder="Describe this class…">{{system.description}}</textarea>
+    </div>
+
+    {{!-- Starting Attributes --}}
+    <div class="ancestry-links-section">
+      <h3 class="ancestry-links-title">
+        <i class="fas fa-chart-bar"></i> Starting Attribute Bonuses
+        <span class="ancestry-link-hint">Mandatory bonuses applied at character creation</span>
+      </h3>
+      <div class="class-attr-grid">
+        {{#each startingAttributes}}
+        <div class="class-attr-item">
+          <label class="class-attr-label">{{@key}}</label>
+          <input type="number" name="system.startingAttributes.{{@key}}"
+                 value="{{this}}" min="0" max="7" class="class-attr-input" />
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    {{!-- Linked Skills --}}
+    <div class="ancestry-links-section">
+      <h3 class="ancestry-links-title">
+        <i class="fas fa-scroll"></i> Class Skills
+        <span class="ancestry-link-hint">Drag skills to link them to this class</span>
+      </h3>
+      {{#if linkedSkills.length}}
+      <div class="ancestry-link-list">
+        {{#each linkedSkills}}
+        <div class="ancestry-link-row">
+          <img class="ancestry-link-img" src="{{img}}" />
+          <span class="ancestry-link-name">{{name}}</span>
+          <span class="ancestry-link-meta">Lvl {{system.level}}</span>
+          <button type="button" class="btn-icon btn-danger" data-action="unlinkSkill" data-item-id="{{id}}" title="Remove link">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="ancestry-empty-hint">No skills linked yet. Drop a Skill item here.</p>
+      {{/if}}
+      <div class="ancestry-link-drop" data-drop-type="skill">
+        <i class="fas fa-plus-circle"></i> Drop a Skill here to link it
+      </div>
+    </div>
+
+    {{!-- Linked Talents --}}
+    <div class="ancestry-links-section">
+      <h3 class="ancestry-links-title">
+        <i class="fas fa-star"></i> Class Talents
+        <span class="ancestry-link-hint">Drag talents to link them to this class</span>
+      </h3>
+      {{#if linkedTalents.length}}
+      <div class="ancestry-link-list">
+        {{#each linkedTalents}}
+        <div class="ancestry-link-row">
+          <img class="ancestry-link-img" src="{{img}}" />
+          <span class="ancestry-link-name">{{name}}</span>
+          <button type="button" class="btn-icon btn-danger" data-action="unlinkTalent" data-item-id="{{id}}" title="Remove link">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        {{/each}}
+      </div>
+      {{else}}
+      <p class="ancestry-empty-hint">No talents linked yet. Drop a Talent item here.</p>
+      {{/if}}
+      <div class="ancestry-link-drop" data-drop-type="talent">
+        <i class="fas fa-plus-circle"></i> Drop a Talent here to link it
+      </div>
+    </div>
+
+    {{!-- Perks placeholder --}}
+    <div class="ancestry-links-section class-perks-placeholder">
+      <h3 class="ancestry-links-title">
+        <i class="fas fa-list-check"></i> Perks
+      </h3>
+      <div class="perks-tbd-overlay">
+        <div class="perks-tbd-label">TBD</div>
+        <div class="perks-tbd-rows">
+          {{#times 6}}
+          <div class="perks-tbd-row">
+            <span class="perks-tbd-check"></span>
+            <span class="perks-tbd-text">Perk slot {{math @index "+" 1}}</span>
+          </div>
+          {{/times}}
+        </div>
+      </div>
+    </div>
+
+  </div>
+  {{/if}}
+
 </div>
 </div>
