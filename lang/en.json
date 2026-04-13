@@ -5,10 +5,12 @@
       "npc": "NPC"
     },
     "ItemTypes": {
-      "skill": "Skill",
-      "talent": "Talent",
-      "background": "Background",
-      "equipment": "Equipment"
+      "skill":       "Skill",
+      "talent":      "Talent",
+      "background":  "Background",
+      "equipment":   "Equipment",
+      "ancestry":    "Ancestry",
+      "class":       "Class"
     },
 
     "Attributes": {

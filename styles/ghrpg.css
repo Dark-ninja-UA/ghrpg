@@ -593,7 +593,7 @@
   flex: 1; padding: 2px 4px;
 }
 .item-type-badge { font-size: 11px; color: var(--ghrpg-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-.item-body { padding: 12px; overflow-y: auto; }
+.item-body { padding: 12px; overflow-y: auto; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; }
 
 .skill-form { display: flex; flex-direction: column; gap: 10px; }
 .form-row   { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -681,7 +681,7 @@
 .npc-stat  { display: flex; flex-direction: column; gap: 2px; }
 .npc-stat label { font-size: 10px; color: var(--ghrpg-text-muted); text-transform: uppercase; }
 .npc-stat input { width: 56px; text-align: center; background: var(--ghrpg-bg-panel); border: 1px solid var(--ghrpg-border); color: var(--ghrpg-text); border-radius: var(--radius); padding: 3px; }
-.npc-body { padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+.npc-body { padding: 12px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; height: 100%; box-sizing: border-box; }
 .attributes-grid.small { grid-template-columns: repeat(6, 1fr); gap: 4px; }
 .deck-counters.small { font-size: 12px; color: var(--ghrpg-text-muted); }
 .draw-buttons.compact { flex-direction: row; gap: 8px; }
@@ -1343,3 +1343,29 @@
   border: 1px solid var(--ghrpg-border); background: var(--ghrpg-bg-panel); flex-shrink: 0;
 }
 .perks-tbd-text { font-size: 11px; color: var(--ghrpg-text-muted); }
+
+/* ─── Scroll fix for NPC and Item sheets ────────────────────── */
+.ghrpg.sheet.actor .window-content,
+.ghrpg.sheet.item .window-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+.ghrpg.sheet .window-content .npc-wrap,
+.ghrpg.sheet .window-content .item-sheet-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Scroll wrappers (override previous attempt) ────────────── */
+.npc-sheet-wrap {
+  display: flex; flex-direction: column; height: 100%; overflow: hidden;
+}
+.ghrpg.sheet.item .window-content { overflow: hidden; padding: 0; }
+.item-sheet-wrap { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+.item-header { flex-shrink: 0; }
+.item-body { flex: 1; min-height: 0; }

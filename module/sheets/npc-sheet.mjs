@@ -21,7 +21,7 @@ export class GHRPGNPCSheet extends HandlebarsApplicationMixin(foundry.applicatio
   };
 
   static PARTS = {
-    sheet: { template: "systems/ghrpg/templates/actors/npc-sheet.hbs", scrollable: [".npc-body"] },
+    sheet: { template: "systems/ghrpg/templates/actors/npc-sheet.hbs", scrollable: [""] },
   };
 
   get title() { return this.actor.name ?? "NPC"; }

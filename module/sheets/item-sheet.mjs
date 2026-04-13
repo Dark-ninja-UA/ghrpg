@@ -18,7 +18,7 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
   };
 
   static PARTS = {
-    sheet: { template: "systems/ghrpg/templates/items/item-sheet.hbs" }
+    sheet: { template: "systems/ghrpg/templates/items/item-sheet.hbs", scrollable: [""] }
   };
 
   get title() {
