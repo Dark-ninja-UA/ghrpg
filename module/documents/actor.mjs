@@ -624,6 +624,11 @@ export class GHRPGActor extends Actor {
 
         const data = worldItem.toObject();
         data.system.sourceId = newSourceId;
+        // Auto-set sourceType based on which list the skill came from
+        if (data.type === "skill" || data.type === "talent") {
+          if (skillIds.includes(id))  data.system.sourceType = field;   // "ancestry" or "class"
+          if (talentIds.includes(id)) data.system.sourceType = field;
+        }
         toCreate.push(data);
       }
 

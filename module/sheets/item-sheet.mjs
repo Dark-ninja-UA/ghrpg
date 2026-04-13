@@ -115,7 +115,7 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
       categoryOptions: { occupation:"Occupation", origin:"Origin", social:"Social" },
       slotOptions:     { head:"Head", body:"Body", feet:"Feet", hand:"Hand", small:"Small" },
       rarityOptions:   { common:"Common", uncommon:"Uncommon", rare:"Rare", masterwork:"Masterwork", legendary:"Legendary" },
-      sourceOptions:   { class:"Class Skill", ancestry:"Ancestry Skill" },
+      sourceOptions:   { class:"Class Skill", ancestry:"Ancestry Skill", other:"Other" },
       isOwned:         !!item.parent,
       isSkill:         item.type === "skill",
       isTalent:        item.type === "talent",

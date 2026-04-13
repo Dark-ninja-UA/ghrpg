@@ -217,7 +217,9 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
 
     const skills      = actor.items.filter(i => i.type === "skill")
                                    .sort((a,b) => (a.system.initiative??99)-(b.system.initiative??99));
-    const preparedSkillCount = skills.filter(s => s.system.prepared).length;
+    const preparedAncestry = skills.filter(s => s.system.prepared && s.system.sourceType === "ancestry").length;
+    const preparedClass    = skills.filter(s => s.system.prepared && s.system.sourceType !== "ancestry").length;
+    const preparedSkillCount = preparedAncestry + preparedClass;
     const talents     = actor.items.filter(i => i.type === "talent")
                                    .sort((a,b) => (a.system.initiative??99)-(b.system.initiative??99));
     const backgrounds = actor.items.filter(i => i.type === "background");
@@ -264,7 +266,7 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       discardList,
       removedDefaults,
       allPerks, selectedPerks,
-      skills, talents, backgrounds, equipment, preparedSkillCount,
+      skills, talents, backgrounds, equipment, preparedSkillCount, preparedAncestry, preparedClass,
       activeTab,
       tabs,
       ancestryOptions, classOptions, factionOptions,
@@ -342,7 +344,27 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
   static async _onTogglePrepared(event, target) {
     const item = this.actor.items.get(target.closest("[data-item-id]")?.dataset.itemId);
     if (!item) return;
-    await item.update({ "system.prepared": !item.system.prepared });
+
+    const preparing = !item.system.prepared;
+    if (preparing) {
+      const skills = this.actor.items.filter(i => i.type === "skill");
+      const isAncestry = item.system.sourceType === "ancestry";
+      if (isAncestry) {
+        const count = skills.filter(s => s.system.prepared && s.system.sourceType === "ancestry").length;
+        if (count >= 2) {
+          ui.notifications.warn("You can only prepare 2 Ancestry skills.");
+          return;
+        }
+      } else {
+        const count = skills.filter(s => s.system.prepared && s.system.sourceType !== "ancestry").length;
+        if (count >= 4) {
+          ui.notifications.warn("You can only prepare 4 Class/Other skills.");
+          return;
+        }
+      }
+    }
+
+    await item.update({ "system.prepared": preparing });
     this.render();
   }
 

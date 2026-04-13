@@ -15,12 +15,17 @@
   {{/if}}
 
   <div class="skills-header">
-    <h2 class="section-title">
-      Skills
-      <span class="skill-counts">
-        Prepared: {{preparedSkillCount}}/6
+    <h2 class="section-title">Skills</h2>
+    <div class="prepared-counts">
+      <span class="prepared-count ancestry-count {{#if (gte preparedAncestry 2)}}count-full{{/if}}"
+            title="Ancestry skills prepared (max 2)">
+        <i class="fas fa-dna"></i> {{preparedAncestry}}/2
       </span>
-    </h2>
+      <span class="prepared-count class-count {{#if (gte preparedClass 4)}}count-full{{/if}}"
+            title="Class / Other skills prepared (max 4)">
+        <i class="fas fa-scroll"></i> {{preparedClass}}/4
+      </span>
+    </div>
     <div class="skill-actions-bar">
       <button type="button" class="add-btn" data-action="createItem" data-type="skill">
         <i class="fas fa-plus"></i> Add Skill
@@ -57,8 +62,8 @@
         <div class="skill-name-row">
           <span class="skill-name">{{name}}</span>
           <span class="skill-source-badge {{system.sourceType}}"
-                title="{{#if (eq system.sourceType "ancestry")}}Ancestry Skill{{else}}Class Skill{{/if}}">
-            {{#if (eq system.sourceType "ancestry")}}A{{else}}C{{/if}}
+                title="{{#if (eq system.sourceType "ancestry")}}Ancestry Skill (counts toward 2/2){{else if (eq system.sourceType "other")}}Other Skill (counts toward class 4/4){{else}}Class Skill (counts toward 4/4){{/if}}">
+            {{#if (eq system.sourceType "ancestry")}}A{{else if (eq system.sourceType "other")}}O{{else}}C{{/if}}
           </span>
           {{#if (includes ../ancestrySkillIds id)}}<span class="ancestry-link-badge" title="Linked to {{../selectedAncestry.name}}"><i class="fas fa-dna"></i></span>{{/if}}
           {{#if system.lost}}<span class="lost-badge">LOST</span>{{/if}}

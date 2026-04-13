@@ -1369,3 +1369,22 @@
 .item-sheet-wrap { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
 .item-header { flex-shrink: 0; }
 .item-body { flex: 1; min-height: 0; }
+
+/* ─── Split prepared counters on Skills tab ──────────────────── */
+.skills-header {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.skills-header .section-title { margin: 0; flex-shrink: 0; }
+.prepared-counts { display: flex; gap: 6px; margin-left: 4px; }
+.prepared-count {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: bold; padding: 2px 8px;
+  border-radius: 10px; border: 1px solid var(--ghrpg-border);
+  background: var(--ghrpg-bg-panel); color: var(--ghrpg-text-muted);
+}
+.prepared-count.count-full { border-color: var(--ghrpg-border-gold); color: var(--ghrpg-gold-light); }
+.ancestry-count i { color: var(--ghrpg-gold); }
+.class-count   i { color: var(--ghrpg-text-muted); }
+.skill-source-badge.other { background: #2a2a3a; border-color: #6666aa; color: #aaaadd; }
+.skills-header .skill-actions-bar { margin-left: auto; }
