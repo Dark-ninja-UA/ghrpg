@@ -31,34 +31,34 @@ export const CARD_TYPE = {
 
 /** The canonical 20-card base deck */
 export const BASE_DECK_TEMPLATE = [
-  // Null
-  { id:"null",   type: CARD_TYPE.NULL,     attrMod: 0, atkMod: "null",     label:"MISS",       reshuffle: false },
-  // Attr +1 (×2)
-  { id:"a1_1",   type: CARD_TYPE.NORMAL,   attrMod: 1, atkMod: -2,         label:"+1 / −2",    reshuffle: false },
-  { id:"a1_2",   type: CARD_TYPE.NORMAL,   attrMod: 1, atkMod: -2,         label:"+1 / −2",    reshuffle: false },
-  // Attr +2 (×3)
-  { id:"a2_1",   type: CARD_TYPE.NORMAL,   attrMod: 2, atkMod: -1,         label:"+2 / −1",    reshuffle: false },
-  { id:"a2_2",   type: CARD_TYPE.NORMAL,   attrMod: 2, atkMod: -1,         label:"+2 / −1",    reshuffle: false },
-  { id:"a2_3",   type: CARD_TYPE.NORMAL,   attrMod: 2, atkMod: -1,         label:"+2 / −1",    reshuffle: false },
-  // Attr +3 (×4)
-  { id:"a3_1",   type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",    reshuffle: false },
-  { id:"a3_2",   type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",    reshuffle: false },
-  { id:"a3_3",   type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",    reshuffle: false },
-  { id:"a3_4",   type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",    reshuffle: false },
-  // Attr +4 (×4)
-  { id:"a4_1",   type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  1,         label:"+4 / +1",    reshuffle: false },
-  { id:"a4_2",   type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  1,         label:"+4 / +1",    reshuffle: false },
-  { id:"a4_3",   type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  1,         label:"+4 / +1",    reshuffle: false },
-  { id:"a4_4",   type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  1,         label:"+4 / +1",    reshuffle: false },
-  // Attr +5 (×3)
-  { id:"a5_1",   type: CARD_TYPE.NORMAL,   attrMod: 5, atkMod:  1,         label:"+5 / +1",    reshuffle: false },
-  { id:"a5_2",   type: CARD_TYPE.NORMAL,   attrMod: 5, atkMod:  2,         label:"+5 / +2",    reshuffle: false },
-  { id:"a5_3",   type: CARD_TYPE.NORMAL,   attrMod: 5, atkMod:  2,         label:"+5 / +2",    reshuffle: false },
-  // Attr +6 (×2)
-  { id:"a6_1",   type: CARD_TYPE.NORMAL,   attrMod: 6, atkMod:  2,         label:"+6 / +2",    reshuffle: false },
-  { id:"a6_2",   type: CARD_TYPE.NORMAL,   attrMod: 6, atkMod:  3,         label:"+6 / +3",    reshuffle: false },
-  // Critical
-  { id:"crit",   type: CARD_TYPE.CRITICAL, attrMod: 6, atkMod: "critical", label:"CRITICAL",   reshuffle: true  },
+  // Null (×1)
+  { id:"null_1",  type: CARD_TYPE.NULL,     attrMod: 0, atkMod: "null",     label:"MISS",     reshuffle: true  },
+  // Attr 1 (×2): one at -2, one at -1
+  { id:"a1_1",    type: CARD_TYPE.NORMAL,   attrMod: 1, atkMod: -2,         label:"+1 / −2",  reshuffle: false },
+  { id:"a1_2",    type: CARD_TYPE.NORMAL,   attrMod: 1, atkMod: -1,         label:"+1 / −1",  reshuffle: false },
+  // Attr 2 (×3): all at -1
+  { id:"a2_1",    type: CARD_TYPE.NORMAL,   attrMod: 2, atkMod: -1,         label:"+2 / −1",  reshuffle: false },
+  { id:"a2_2",    type: CARD_TYPE.NORMAL,   attrMod: 2, atkMod: -1,         label:"+2 / −1",  reshuffle: false },
+  { id:"a2_3",    type: CARD_TYPE.NORMAL,   attrMod: 2, atkMod: -1,         label:"+2 / −1",  reshuffle: false },
+  // Attr 3 (×4): one at -1, three at ±0
+  { id:"a3_1",    type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod: -1,         label:"+3 / −1",  reshuffle: false },
+  { id:"a3_2",    type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",  reshuffle: false },
+  { id:"a3_3",    type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",  reshuffle: false },
+  { id:"a3_4",    type: CARD_TYPE.NORMAL,   attrMod: 3, atkMod:  0,         label:"+3 / ±0",  reshuffle: false },
+  // Attr 4 (×4): three at ±0, one at +1
+  { id:"a4_1",    type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  0,         label:"+4 / ±0",  reshuffle: false },
+  { id:"a4_2",    type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  0,         label:"+4 / ±0",  reshuffle: false },
+  { id:"a4_3",    type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  0,         label:"+4 / ±0",  reshuffle: false },
+  { id:"a4_4",    type: CARD_TYPE.NORMAL,   attrMod: 4, atkMod:  1,         label:"+4 / +1",  reshuffle: false },
+  // Attr 5 (×3): all at +1
+  { id:"a5_1",    type: CARD_TYPE.NORMAL,   attrMod: 5, atkMod:  1,         label:"+5 / +1",  reshuffle: false },
+  { id:"a5_2",    type: CARD_TYPE.NORMAL,   attrMod: 5, atkMod:  1,         label:"+5 / +1",  reshuffle: false },
+  { id:"a5_3",    type: CARD_TYPE.NORMAL,   attrMod: 5, atkMod:  1,         label:"+5 / +1",  reshuffle: false },
+  // Attr 6 (×2): one at +1, one at +2
+  { id:"a6_1",    type: CARD_TYPE.NORMAL,   attrMod: 6, atkMod:  1,         label:"+6 / +1",  reshuffle: false },
+  { id:"a6_2",    type: CARD_TYPE.NORMAL,   attrMod: 6, atkMod:  2,         label:"+6 / +2",  reshuffle: false },
+  // Critical (×1)
+  { id:"crit_1",  type: CARD_TYPE.CRITICAL, attrMod: 6, atkMod: "critical", label:"CRITICAL", reshuffle: true  },
 ];
 
 export const BLESS_CARD  = { id:"bless",  type: CARD_TYPE.BLESS,  attrMod: 6, atkMod: "critical", label:"BLESS",  reshuffle: false };
@@ -85,7 +85,7 @@ export const PERK_DEFINITIONS = {
   // ── Placeholder perks (class-specific perks added per-class later) ──
   "remove_null_x2": {
     id: "remove_null_x2",
-    label: "Remove two +1/−2 cards",
+    label: "Remove +1/−2 and +1/−1 cards",
     remove: ["a1_1","a1_2"],
     add: []
   },
@@ -113,7 +113,7 @@ export const PERK_DEFINITIONS = {
   "replace_two_3_with_4": {
     id: "replace_two_3_with_4",
     label: "Replace two +3/±0 cards with +4/+1 cards",
-    remove: ["a3_1","a3_2"],
+    remove: ["a3_2","a3_3"],
     add: [
       { id:"perk_replace_two_3_with_4_0", type: CARD_TYPE.NORMAL, attrMod: 4, atkMod: 1, label:"+4 / +1", reshuffle: false, perkId: "replace_two_3_with_4" },
       { id:"perk_replace_two_3_with_4_1", type: CARD_TYPE.NORMAL, attrMod: 4, atkMod: 1, label:"+4 / +1", reshuffle: false, perkId: "replace_two_3_with_4" }
