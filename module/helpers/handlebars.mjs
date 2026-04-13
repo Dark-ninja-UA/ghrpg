@@ -57,6 +57,9 @@ export function registerHandlebarsHelpers() {
   });
 
   Handlebars.registerHelper("includes", (arr, val) => Array.isArray(arr) && arr.includes(val));
+  Handlebars.registerHelper("add",  (a, b) => Number(a) + Number(b));
+  Handlebars.registerHelper("lte",  (a, b) => Number(a) <= Number(b));
+  Handlebars.registerHelper("gt",   (a, b) => Number(a) >  Number(b));
   Handlebars.registerHelper("math", (a, op, b) => {
     const x = Number(a), y = Number(b);
     if (op === "+") return x + y;

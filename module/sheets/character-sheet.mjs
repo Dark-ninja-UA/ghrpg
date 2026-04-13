@@ -41,6 +41,7 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       removeCard:         GHRPGCharacterSheet._onRemoveCard,
       restoreCard:        GHRPGCharacterSheet._onRestoreCard,
       addCustomCard:      GHRPGCharacterSheet._onAddCustomCard,
+      togglePerk:         GHRPGCharacterSheet._onTogglePerk,
       editImage:          GHRPGCharacterSheet._onEditImage,
       configureToken:     GHRPGCharacterSheet._onConfigureToken,
     }
@@ -244,6 +245,20 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
     const classSkillIds      = selectedClass?.system?.skillIds  ?? [];
     const classTalentIds     = selectedClass?.system?.talentIds ?? [];
     const classStartingAttrs = selectedClass?.system?.startingAttributes ?? null;
+
+    // Perk calculations
+    const rawPerks       = system.perks ?? [];  // [{perkId, count}] or legacy []
+    const bonusPerks     = system.bonusPerks ?? 0;
+    const basePerkPoints = Math.max(0, (system.level ?? 1) - 1);
+    const totalPerkPoints = basePerkPoints + bonusPerks;
+    const usedPerkPoints  = rawPerks.reduce((sum, p) => sum + (p.count ?? 1), 0);
+    const availablePerkPoints = totalPerkPoints - usedPerkPoints;
+
+    // Build perk list from selected class with taken counts
+    const classPerks = (selectedClass?.system?.perks ?? []).map(p => ({
+      ...p,
+      takenCount: rawPerks.find(rp => rp.perkId === p.id)?.count ?? 0,
+    }));
     const factionOptions  = ["","keepers","guild","freebooters","shields","sect","university","robins"];
 
     const activeTab = this.tabGroups.sheet ?? "stats";
@@ -272,6 +287,7 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       ancestryOptions, classOptions, factionOptions,
       selectedAncestry, ancestrySkillIds, ancestryTalentIds,
       selectedClass, classSkillIds, classTalentIds, classStartingAttrs,
+      classPerks, basePerkPoints, totalPerkPoints, usedPerkPoints, availablePerkPoints,
       isOwner: actor.isOwner,
       isGM:    game.user.isGM,
       hpPct:   Math.round((system.hp.value / (system.hp.max || 1)) * 100),
@@ -413,15 +429,57 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
   }
 
   static async _onTogglePerk(event, target) {
-    const perkId = target.dataset.perkId;
+    const perkId   = target.dataset.perkId;
+    const slot     = Number(target.dataset.perkSlot); // 0-based slot index
     if (!perkId) return;
-    const perks  = [...(this.actor.system.perks ?? [])];
-    const idx    = perks.indexOf(perkId);
-    const adding = idx < 0;
-    if (adding) perks.push(perkId); else perks.splice(idx, 1);
-    await this.actor.update({ "system.perks": perks });
-    if (adding) await this.actor.applyPerk(perkId);
-    else        await this.actor.removePerk(perkId);
+
+    // Get class perk definition
+    const selectedClass = this.actor.system.class ? game.items.get(this.actor.system.class) : null;
+    const perkDef = selectedClass?.system?.perks?.find(p => p.id === perkId);
+    if (!perkDef) return;
+
+    const rawPerks = foundry.utils.deepClone(this.actor.system.perks ?? []);
+    const existing = rawPerks.find(p => p.perkId === perkId);
+    const currentCount = existing?.count ?? 0;
+    const clickedSlot  = slot + 1; // 1-based
+
+    let newCount;
+    if (clickedSlot <= currentCount) {
+      // Clicking a checked slot — uncheck down to slot-1
+      newCount = clickedSlot - 1;
+    } else {
+      // Clicking an unchecked slot — check up to that slot
+      // Check perk points available
+      const bonusPerks      = this.actor.system.bonusPerks ?? 0;
+      const basePerkPoints  = Math.max(0, (this.actor.system.level ?? 1) - 1);
+      const totalPerkPoints = basePerkPoints + bonusPerks;
+      const usedPerkPoints  = rawPerks.reduce((sum, p) => sum + (p.count ?? 1), 0);
+      const slotsNeeded     = clickedSlot - currentCount;
+      if (usedPerkPoints + slotsNeeded > totalPerkPoints) {
+        ui.notifications.warn(`Not enough perk points. Available: ${totalPerkPoints - usedPerkPoints}`);
+        return;
+      }
+      newCount = clickedSlot;
+    }
+
+    // Apply deck changes
+    const diff = newCount - currentCount;
+    if (diff > 0) {
+      for (let i = 0; i < diff; i++) await this.actor.applyClassPerk(perkDef);
+    } else if (diff < 0) {
+      for (let i = 0; i < Math.abs(diff); i++) await this.actor.removeClassPerk(perkDef);
+    }
+
+    // Update perk count on actor
+    if (newCount === 0) {
+      const idx = rawPerks.findIndex(p => p.perkId === perkId);
+      if (idx !== -1) rawPerks.splice(idx, 1);
+    } else if (existing) {
+      existing.count = newCount;
+    } else {
+      rawPerks.push({ perkId, count: newCount });
+    }
+    await this.actor.update({ "system.perks": rawPerks });
     this.render();
   }
 

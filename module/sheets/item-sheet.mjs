@@ -1,3 +1,4 @@
+import { PerkEditorDialog } from "../apps/perk-editor.mjs";
 /**
  * item-sheet.mjs — GHRPGItemSheet, Foundry v13
  */
@@ -128,4 +129,33 @@ export class GHRPGItemSheet extends HandlebarsApplicationMixin(foundry.applicati
       startingAttributes: item.type === "class" ? system.startingAttributes : null,
     };
   }
+  static async _onAddPerk(event, target) {
+    if (this.item.type !== "class") return;
+    const dialog = new PerkEditorDialog(this.item, null, -1);
+    dialog.render(true);
+  }
+
+  static async _onEditPerk(event, target) {
+    if (this.item.type !== "class") return;
+    const idx  = Number(target.dataset.perkIndex);
+    const perk = this.item.system.perks?.[idx];
+    if (!perk) return;
+    const dialog = new PerkEditorDialog(this.item, perk, idx);
+    dialog.render(true);
+  }
+
+  static async _onDeletePerk(event, target) {
+    const idx   = Number(target.dataset.perkIndex);
+    const perks = foundry.utils.deepClone(this.item.system.perks ?? []);
+    const perk  = perks[idx];
+    if (!perk) return;
+    const confirm = await Dialog.confirm({
+      title:   "Delete Perk",
+      content: `<p>Delete perk "<strong>${perk.label}</strong>"? This cannot be undone.</p>`,
+    });
+    if (!confirm) return;
+    perks.splice(idx, 1);
+    await this.item.update({ "system.perks": perks });
+  }
+
 }

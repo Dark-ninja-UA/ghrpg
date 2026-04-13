@@ -13,6 +13,7 @@ import { registerHandlebarsHelpers } from "./helpers/handlebars.mjs";
 import { buildDeck }            from "./helpers/modifier-deck.mjs";
 import { ElementTracker }       from "./apps/element-tracker.mjs";
 import { GMDeckApp }            from "./apps/gm-deck.mjs";
+import { PerkEditorDialog }     from "./apps/perk-editor.mjs";
 
 /* ─────────────────────────────────────────
    Hooks.once("init")
@@ -63,6 +64,7 @@ Hooks.once("init", () => {
     "systems/ghrpg/templates/items/item-sheet.hbs",
     "systems/ghrpg/templates/apps/element-tracker.hbs",
     "systems/ghrpg/templates/apps/gm-deck.hbs",
+    "systems/ghrpg/templates/apps/perk-editor.hbs",
   ];
   loadTemplates(templates);
 

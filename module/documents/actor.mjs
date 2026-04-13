@@ -6,6 +6,7 @@
 
 import {
   buildDeck, applyPerkToDeck, removePerkFromDeck, drawCards, shuffleArray,
+  BASE_DECK_TEMPLATE,
   addBless, addCurse, resolveDrawMode,
   formatAtkMod, formatAttrMod,
   endOfRoundMaintenance, CARD_TYPE
@@ -189,6 +190,65 @@ export class GHRPGActor extends Actor {
       "system.modifierDeck.curseCount": curseCards.length,
     });
     ui.notifications.info(`${this.name}'s Modifier Deck reshuffled!`);
+  }
+
+  /** Apply one instance of a class perk definition to the deck. */
+  async applyClassPerk(perkDef) {
+    const md      = this.system.modifierDeck ?? { deck:[], discard:[] };
+    let   deck    = [...(md.deck    ?? [])];
+    let   discard = [...(md.discard ?? [])];
+
+    // Remove base deck cards
+    for (const removeId of (perkDef.removeCards ?? [])) {
+      const di = deck.findIndex(c => c.id === removeId);
+      if (di !== -1) { deck.splice(di, 1); continue; }
+      const dsi = discard.findIndex(c => c.id === removeId);
+      if (dsi !== -1) discard.splice(dsi, 1);
+    }
+
+    // Add new cards tagged with perkId
+    for (const cardDef of (perkDef.addCards ?? [])) {
+      const card = {
+        id:        `perk_${perkDef.id}_${Date.now()}_${Math.random().toString(36).slice(2,6)}`,
+        type:      CARD_TYPE.NORMAL,
+        atkMod:    Number(cardDef.atkMod  ?? 0),
+        attrMod:   Number(cardDef.attrMod ?? 0),
+        label:     `${cardDef.atkMod >= 0 ? "+" : ""}${cardDef.atkMod} / ${cardDef.attrMod >= 0 ? "+" : ""}${cardDef.attrMod}`,
+        reshuffle: false,
+        perkId:    perkDef.id,
+        effects:   (cardDef.effects ?? []).filter(e => e.type),
+        flavor:    cardDef.flavor ?? "",
+      };
+      deck.push(card);
+    }
+
+    deck = shuffleArray(deck);
+    await this.update({ "system.modifierDeck.deck": deck, "system.modifierDeck.discard": discard });
+  }
+
+  /** Remove one instance of a class perk's cards from the deck. */
+  async removeClassPerk(perkDef) {
+    const md      = this.system.modifierDeck ?? { deck:[], discard:[] };
+    let   deck    = [...(md.deck    ?? [])];
+    let   discard = [...(md.discard ?? [])];
+
+    // Remove ONE added card per addCard definition (tagged with perkId)
+    for (const _cardDef of (perkDef.addCards ?? [])) {
+      const di = deck.findIndex(c => c.perkId === perkDef.id);
+      if (di !== -1) { deck.splice(di, 1); continue; }
+      const dsi = discard.findIndex(c => c.perkId === perkDef.id);
+      if (dsi !== -1) discard.splice(dsi, 1);
+    }
+
+    // Re-add removed base cards (one per removal slot)
+    for (const removeId of (perkDef.removeCards ?? [])) {
+      const baseCard = BASE_DECK_TEMPLATE.find(c => c.id === removeId);
+      if (!baseCard) continue;
+      const alreadyPresent = deck.some(c => c.id === removeId) || discard.some(c => c.id === removeId);
+      if (!alreadyPresent) deck.push({ ...baseCard });
+    }
+
+    await this.update({ "system.modifierDeck.deck": deck, "system.modifierDeck.discard": discard });
   }
 
   /** Surgically apply a perk's cards to the deck (no reshuffle). */

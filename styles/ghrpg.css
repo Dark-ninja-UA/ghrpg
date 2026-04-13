@@ -1388,3 +1388,85 @@
 .class-count   i { color: var(--ghrpg-text-muted); }
 .skill-source-badge.other { background: #2a2a3a; border-color: #6666aa; color: #aaaadd; }
 .skills-header .skill-actions-bar { margin-left: auto; }
+
+/* ─── Perks Section (Deck Tab) ───────────────────────────────── */
+.deck-perks-section {
+  margin-top: 16px; border-top: 1px solid var(--ghrpg-border);
+  padding-top: 12px;
+}
+.deck-perks-header {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 6px; margin-bottom: 10px;
+}
+.deck-perks-title { font-size: 13px; color: var(--ghrpg-gold-light); margin: 0; }
+.perk-points-display { display: flex; align-items: center; gap: 10px; font-size: 11px; }
+.perk-points-available { color: var(--ghrpg-text-muted); }
+.perk-points-available.perk-points-empty { color: var(--ghrpg-red-bright); }
+.perk-points-bonus { display: flex; align-items: center; gap: 4px; color: var(--ghrpg-text-muted); }
+.bonus-perks-input {
+  width: 40px; text-align: center; font-size: 11px;
+  background: var(--ghrpg-bg-panel); border: 1px solid var(--ghrpg-border);
+  color: var(--ghrpg-text); border-radius: var(--radius); padding: 1px 3px;
+}
+.perk-no-class { font-size: 11px; color: var(--ghrpg-text-muted); font-style: italic; }
+
+.perks-list { display: flex; flex-direction: column; gap: 5px; }
+.perk-entry {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px; background: var(--ghrpg-bg-panel);
+  border: 1px solid var(--ghrpg-border); border-radius: var(--radius);
+}
+.perk-entry.perk-points-exhausted .perk-checkbox.perk-unchecked { opacity: 0.4; cursor: not-allowed; }
+.perk-entry-label { flex: 1; font-size: 12px; color: var(--ghrpg-text); }
+.perk-checkboxes { display: flex; gap: 4px; }
+.perk-checkbox {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font-size: 16px; line-height: 1; color: var(--ghrpg-text-muted);
+  transition: color 0.15s;
+}
+.perk-checkbox.perk-checked { color: var(--ghrpg-gold-light); }
+.perk-checkbox.perk-unchecked:hover { color: var(--ghrpg-gold); }
+
+/* ─── Class Item Perks List ──────────────────────────────────── */
+.class-perks-list { display: flex; flex-direction: column; gap: 4px; }
+.class-perk-row {
+  display: flex; align-items: center; gap: 6px;
+  padding: 4px 6px; background: var(--ghrpg-bg-item); border-radius: var(--radius);
+}
+.class-perk-label { flex: 1; font-size: 12px; }
+.class-perk-meta { font-size: 10px; color: var(--ghrpg-text-muted); }
+
+/* ─── Perk Editor Dialog ─────────────────────────────────────── */
+.perk-editor-dialog .window-content { padding: 0; overflow: hidden; }
+.perk-editor-body {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 12px; overflow-y: auto; max-height: 70vh;
+}
+.perk-editor-row { display: flex; gap: 8px; align-items: flex-end; }
+.perk-section {
+  border: 1px solid var(--ghrpg-border); border-radius: var(--radius);
+  padding: 8px 10px; background: var(--ghrpg-bg-panel);
+}
+.perk-section-title { font-size: 12px; color: var(--ghrpg-gold-light); margin: 0 0 8px; }
+.remove-cards-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px;
+}
+.remove-card-option {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--ghrpg-text-muted); cursor: pointer;
+}
+.remove-card-option input { width: auto; margin: 0; }
+.perk-add-card {
+  border: 1px solid var(--ghrpg-border); border-radius: var(--radius);
+  padding: 8px; margin-bottom: 6px; background: var(--ghrpg-bg);
+}
+.perk-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.perk-card-num { font-size: 11px; font-weight: bold; color: var(--ghrpg-gold); }
+.perk-effects-list { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+.perk-effect-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.perk-opt-label { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--ghrpg-text-muted); }
+.perk-opt-label input { width: auto; margin: 0; }
+.perk-editor-actions { display: flex; gap: 8px; justify-content: flex-end; padding-top: 6px; border-top: 1px solid var(--ghrpg-border); }

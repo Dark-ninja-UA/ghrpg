@@ -338,4 +338,52 @@
 
   </div>
 
+  {{!-- ─── Perks Section ─── --}}
+  <div class="deck-perks-section">
+    <div class="deck-perks-header">
+      <h3 class="deck-perks-title"><i class="fas fa-list-check"></i> Perks</h3>
+      <div class="perk-points-display">
+        {{#if selectedClass}}
+        <span class="perk-points-available {{#if (lte availablePerkPoints 0)}}perk-points-empty{{/if}}">
+          {{usedPerkPoints}}/{{totalPerkPoints}} perks used
+        </span>
+        <span class="perk-points-bonus" title="Bonus perks">
+          Base: {{basePerkPoints}} + Bonus:
+          <input type="number" name="system.bonusPerks" value="{{system.bonusPerks}}"
+                 min="0" class="bonus-perks-input" />
+        </span>
+        {{else}}
+        <span class="perk-no-class">Assign a class to see perks</span>
+        {{/if}}
+      </div>
+    </div>
+
+    {{#if selectedClass}}
+    {{#if classPerks.length}}
+    <div class="perks-list">
+      {{#each classPerks}}
+      <div class="perk-entry {{#if (lte ../availablePerkPoints 0)}}perk-points-exhausted{{/if}}">
+        <div class="perk-entry-label">{{label}}</div>
+        <div class="perk-checkboxes">
+          {{#times maxTimes}}
+          <button type="button"
+                  class="perk-checkbox {{#if (gt (add 1 this) ../takenCount)}}perk-unchecked{{else}}perk-checked{{/if}}"
+                  data-action="togglePerk"
+                  data-perk-id="{{../id}}"
+                  data-perk-slot="{{this}}"
+                  title="{{../label}} ({{add 1 this}}/{{../maxTimes}})">
+            <i class="fas {{#if (gt (add 1 this) ../takenCount)}}fa-square{{else}}fa-check-square{{/if}}"></i>
+          </button>
+          {{/times}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{else}}
+    <p class="ancestry-empty-hint">No perks defined on the selected class. Open the class item to add perks.</p>
+    {{/if}}
+    {{/if}}
+
+  </div>
+
 </section>

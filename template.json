@@ -104,7 +104,8 @@
       },
       "perks": [],
       "attributePoints": 6,
-      "initiative": 0
+      "initiative": 0,
+      "bonusPerks": 0
     },
     "npc": {
       "templates": [
@@ -267,7 +268,8 @@
         "understanding": 0
       },
       "skillIds": [],
-      "talentIds": []
+      "talentIds": [],
+      "perks": []
     }
   }
 }

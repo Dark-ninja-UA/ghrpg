@@ -341,22 +341,32 @@
       </div>
     </div>
 
-    {{!-- Perks placeholder --}}
-    <div class="ancestry-links-section class-perks-placeholder">
+    {{!-- Perks --}}
+    <div class="ancestry-links-section">
       <h3 class="ancestry-links-title">
         <i class="fas fa-list-check"></i> Perks
+        <button type="button" class="add-btn" data-action="addPerk" style="margin-left:auto;font-size:10px;padding:2px 8px">
+          <i class="fas fa-plus"></i> Add Perk
+        </button>
       </h3>
-      <div class="perks-tbd-overlay">
-        <div class="perks-tbd-label">TBD</div>
-        <div class="perks-tbd-rows">
-          {{#times 6}}
-          <div class="perks-tbd-row">
-            <span class="perks-tbd-check"></span>
-            <span class="perks-tbd-text">Perk slot {{math this "+" 1}}</span>
-          </div>
-          {{/times}}
+      {{#if system.perks.length}}
+      <div class="class-perks-list">
+        {{#each system.perks}}
+        <div class="class-perk-row">
+          <span class="class-perk-label">{{label}}</span>
+          <span class="class-perk-meta">×{{maxTimes}}</span>
+          <button type="button" class="btn-icon" data-action="editPerk" data-perk-index="{{@index}}" title="Edit">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button type="button" class="btn-icon btn-danger" data-action="deletePerk" data-perk-index="{{@index}}" title="Delete">
+            <i class="fas fa-trash"></i>
+          </button>
         </div>
+        {{/each}}
       </div>
+      {{else}}
+      <p class="ancestry-empty-hint">No perks defined. Click "Add Perk" to create one.</p>
+      {{/if}}
     </div>
 
   </div>
