@@ -5,7 +5,7 @@
  */
 
 import { GHRPGActor }          from "./documents/actor.mjs";
-import { GHRPGItem }           from "./documents/item.mjs";
+import { GHRPGItem, DEFAULT_ICONS } from "./documents/item.mjs";
 import { GHRPGCharacterSheet } from "./sheets/character-sheet.mjs";
 import { GHRPGNPCSheet }       from "./sheets/npc-sheet.mjs";
 import { GHRPGItemSheet }      from "./sheets/item-sheet.mjs";
@@ -151,6 +151,15 @@ Hooks.once("ready", () => {
 
     buildDeck,
   };
+});
+
+/* ─────────────────────────────────────────
+   Default icons per item type
+───────────────────────────────────────── */
+Hooks.on("preCreateItem", (item, data, options, userId) => {
+  if (item.img && item.img !== Item.DEFAULT_ICON) return;
+  const icon = DEFAULT_ICONS[item.type];
+  if (icon) item.updateSource({ img: icon });
 });
 
 /* ─────────────────────────────────────────

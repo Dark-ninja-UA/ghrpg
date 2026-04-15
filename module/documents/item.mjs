@@ -3,6 +3,15 @@
  * GHRPGItem extends the base Item document.
  */
 
+export const DEFAULT_ICONS = {
+  skill:      "icons/svg/card-hand.svg",
+  talent:     "icons/svg/daze.svg",
+  background: "icons/svg/book.svg",
+  equipment:  "icons/svg/chest.svg",
+  ancestry:   "icons/svg/oak.svg",
+  class:      "icons/svg/shield.svg",
+};
+
 export class GHRPGItem extends Item {
 
   /** @override */
