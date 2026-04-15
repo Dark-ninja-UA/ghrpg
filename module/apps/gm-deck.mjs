@@ -22,7 +22,7 @@ export class GMDeckApp extends HandlebarsApplicationMixin(ApplicationV2) {
     classes: ["ghrpg", "gm-deck-app"],
     position: { width: 400, height: 600, top: 80, left: 160 },
     window: {
-      title:       "GM Modifier Deck",
+      title:       "GHRPG.GMDeck.Title",
       resizable:   true,
       minimizable: true,
     },
@@ -197,7 +197,7 @@ export class GMDeckApp extends HandlebarsApplicationMixin(ApplicationV2) {
   ${modeBadge}${drawnRow}${cardVisual}${specialNote}${breakdown}
 </div>`.trim();
 
-    await ChatMessage.create({ content, speaker: { alias: "Game Master" } });
+    await ChatMessage.create({ content, speaker: { alias: game.i18n.localize("GHRPG.GMDeck.ChatName") } });
   }
 
   /* ── Action Handlers ────────────────────────────────────────── */

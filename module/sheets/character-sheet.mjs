@@ -368,13 +368,13 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       if (isAncestry) {
         const count = skills.filter(s => s.system.prepared && s.system.sourceType === "ancestry").length;
         if (count >= 2) {
-          ui.notifications.warn("You can only prepare 2 Ancestry skills.");
+          ui.notifications.warn(game.i18n.localize("GHRPG.Notifications.AncestrySkillsLimit"));
           return;
         }
       } else {
         const count = skills.filter(s => s.system.prepared && s.system.sourceType !== "ancestry").length;
         if (count >= 4) {
-          ui.notifications.warn("You can only prepare 4 Class/Other skills.");
+          ui.notifications.warn(game.i18n.localize("GHRPG.Notifications.ClassSkillsLimit"));
           return;
         }
       }
@@ -456,7 +456,7 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       const usedPerkPoints  = rawPerks.reduce((sum, p) => sum + (p.count ?? 1), 0);
       const slotsNeeded     = clickedSlot - currentCount;
       if (usedPerkPoints + slotsNeeded > totalPerkPoints) {
-        ui.notifications.warn(`Not enough perk points. Available: ${totalPerkPoints - usedPerkPoints}`);
+        ui.notifications.warn(game.i18n.format("GHRPG.Notifications.NotEnoughPerkPoints", { available: totalPerkPoints - usedPerkPoints }));
         return;
       }
       newCount = clickedSlot;

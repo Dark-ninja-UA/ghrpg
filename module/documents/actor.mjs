@@ -376,7 +376,7 @@ export class GHRPGActor extends Actor {
     // Draw the card
     const drawResult = await this.drawModifierCard(mode);
     if (!drawResult) {
-      ui.notifications.warn("Modifier Deck is empty and could not be rebuilt.");
+      ui.notifications.warn(game.i18n.localize("GHRPG.Notifications.DeckEmpty"));
       return;
     }
 
@@ -545,7 +545,7 @@ export class GHRPGActor extends Actor {
 
     return `
 <div class="ghrpg chat-roll">
-  <h3 class="roll-title">${attrLabel} Test</h3>
+  <h3 class="roll-title">${game.i18n.format("GHRPG.Roll.AttributeTest", { attribute: attrLabel })}</h3>
   ${modeBadge}${drawnRow}${cardVisual}${specialNote}${breakdown}${tnLine}
 </div>`.trim();
   }
@@ -707,7 +707,7 @@ export class GHRPGActor extends Actor {
     const items = this.items.filter(i => i.type === "skill" && i.system.expended && !i.system.lost);
     const updates = items.map(i => ({ _id: i.id, "system.expended": false }));
     if (updates.length) await this.updateEmbeddedDocuments("Item", updates);
-    ui.notifications.info(`${this.name} takes a Quick Breath — ${updates.length} skill(s) recovered.`);
+    ui.notifications.info(`${this.name}: ${game.i18n.localize("GHRPG.Sheet.QuickBreath")} — ${updates.length} ${game.i18n.localize("GHRPG.Sheet.SkillExpended").toLowerCase()}`);
   }
 
   /** Full Rest: recover ALL skills including lost, reshuffle deck, set HP to max */
@@ -723,7 +723,7 @@ export class GHRPGActor extends Actor {
     // Set HP to max
     await this.update({ "system.hp.value": this.system.hp.max });
 
-    ui.notifications.info(`${this.name} takes a Full Rest — fully recovered!`);
+    ui.notifications.info(`${this.name}: ${game.i18n.localize("GHRPG.Sheet.FullRest")}`);
   }
 
   /** ----------------------------------------

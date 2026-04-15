@@ -1,0 +1,222 @@
+{
+  "GHRPG": {
+    "ActorTypes": {
+      "character": "Персонаж",
+      "npc": "НПС"
+    },
+    "ItemTypes": {
+      "skill":      "Навичка",
+      "talent":     "Талант",
+      "background": "Досвід",
+      "equipment":  "Спорядження",
+      "ancestry":   "Походження",
+      "class":      "Клас"
+    },
+
+    "Attributes": {
+      "cunning":       "Хитрість",
+      "finesse":       "Спритність",
+      "grit":          "Стійкість",
+      "intuition":     "Інтуїція",
+      "logic":         "Логіка",
+      "understanding": "Розуміння"
+    },
+    "AttributeAbbr": {
+      "cunning":       "ХТ",
+      "finesse":       "СП",
+      "grit":          "СТ",
+      "intuition":     "ІН",
+      "logic":         "ЛГ",
+      "understanding": "РЗ"
+    },
+
+    "Elements": {
+      "air":   "Повітря",
+      "dark":  "Темрява",
+      "earth": "Земля",
+      "fire":  "Вогонь",
+      "ice":   "Лід",
+      "light": "Світло"
+    },
+    "ElementState": {
+      "inert":  "Інертний",
+      "waning": "Згасаючий",
+      "strong": "Сильний"
+    },
+
+    "Conditions": {
+      "Positive": {
+        "bless":     "Благословення",
+        "invisible": "Невидимість",
+        "regenerate":"Регенерація",
+        "safeguard": "Оберіг",
+        "strengthen":"Посилення",
+        "ward":      "Захист"
+      },
+      "Negative": {
+        "curse":     "Прокляття",
+        "immobilize":"Знерухомлення",
+        "muddle":    "Розгублення",
+        "pacify":    "Приборкання",
+        "poison":    "Отрута",
+        "stun":      "Оглушення",
+        "wound":     "Поранення"
+      }
+    },
+
+    "Sheet": {
+      "Stats":      "Характеристики",
+      "Skills":     "Навички",
+      "Talents":    "Таланти",
+      "Inventory":  "Інвентар",
+      "Background": "Досвід",
+      "Biography":  "Біографія",
+      "Deck":       "Колода",
+
+      "Level":         "Рівень",
+      "Class":         "Клас",
+      "Ancestry":      "Походження",
+      "Faction":       "Фракція",
+      "HP":            "ОЗ",
+      "Gold":          "Золото",
+      "Initiative":    "Ініціатива",
+      "PersonalQuest": "Особиста місія",
+
+      "RollAttribute": "Кинути",
+      "DrawCard":      "Витягнути карту",
+      "Reshuffle":     "Перемішати",
+      "DeckCount":     "Карт у стосі",
+      "DiscardCount":  "Скид",
+
+      "PrepareSkills": "Підготувати навички на день",
+      "SkillPrepared": "Підготовлена",
+      "SkillExpended": "Використана",
+      "SkillLost":     "Втрачена",
+      "UseSkill":      "Використати навичку",
+      "RecoverSkill":  "Відновити",
+      "QuickBreath":   "Передишка",
+      "FullRest":      "Повний відпочинок",
+
+      "Perks":      "Перки",
+      "ManageDeck": "Керування колодою",
+
+      "Primary":   "Основна дія",
+      "Secondary": "Додаткова дія"
+    },
+
+    "Roll": {
+      "AttributeTest": "Перевірка {attribute}",
+      "Result":        "Результат: {total}",
+      "CardDrawn":     "Карта: {label}",
+      "AttrMod":       "Модифікатор атрибуту: +{mod}",
+      "AtkMod":        "Модифікатор атаки: {mod}",
+      "Null":          "ПРОМАХ — Критична невдача!",
+      "Critical":      "КРИТИЧНИЙ УСПІХ!",
+      "Advantage":     "(Перевага — обрано кращу з двох карт)",
+      "Disadvantage":  "(Невигода — обрано гіршу з двох карт)",
+      "Bless":         "БЛАГОСЛОВЕННЯ — як Критичний!",
+      "Curse":         "ПРОКЛЯТТЯ — як Промах!",
+      "Success":       "Успіх (результат {total} проти ЦЧ {tn})",
+      "Failure":       "Невдача (результат {total} проти ЦЧ {tn})"
+    },
+
+    "Dialog": {
+      "AttributeTest": "Перевірка атрибуту",
+      "AttackRoll":    "Атака",
+      "TargetNumber":  "Цільове число",
+      "AttackValue":   "Базове значення атаки",
+      "Mode":          "Режим",
+      "Normal":        "Звичайний",
+      "Advantage":     "Перевага",
+      "Disadvantage":  "Невигода",
+      "Bonus":         "Бонус (досвід, навички тощо)",
+      "Roll":          "Кинути",
+      "Cancel":        "Скасувати"
+    },
+
+    "Deck": {
+      "DrawPile":        "Стос",
+      "DiscardPile":     "Скид",
+      "Bless":           "Благословення",
+      "Curse":           "Прокляття",
+      "AddCard":         "Додати карту",
+      "RemoveCard":      "Прибрати карту",
+      "LastDrawn":       "Остання карта",
+      "Normal":          "Звичайний",
+      "Advantage":       "Перевага",
+      "Disadvantage":    "Невигода",
+      "Reshuffle":       "Перемішати",
+      "Initialize":      "Ініціалізувати",
+      "Miss":            "Промах",
+      "Critical":        "Критичний",
+      "BonusPerks":      "Бонусні перки",
+      "NoPerks":         "Перки відсутні"
+    },
+
+    "Effects": {
+      "poison":     "Отрута",
+      "wound":      "Поранення",
+      "muddle":     "Розгублення",
+      "stun":       "Оглушення",
+      "immobilize": "Знерухомлення",
+      "pierce":     "Пробивання",
+      "push":       "Відштовхування",
+      "pull":       "Притягування",
+      "heal":       "Зцілення",
+      "strengthen": "Посилення",
+      "curse":      "Прокляття",
+      "bless":      "Благословення",
+      "invisible":  "Невидимість"
+    },
+
+    "Notifications": {
+      "NotEnoughPerkPoints":    "Недостатньо перків. В наявності: {available}",
+      "AncestrySkillsLimit":    "Можна підготувати тільки 2 навички походження",
+      "ClassSkillsLimit":       "Можна підготувати тільки 4 інші навички",
+      "DeckEmpty":              "Колода модифікаторів порожня і не може бути перебудована",
+      "NoAncestrySelected":     "Походження не обране",
+      "NoSkillsLinked":         "Навички не додані"
+    },
+
+    "GMDeck": {
+      "Title":    "Колода модифікаторів Майстра",
+      "ChatName": "Витягнута карта Майстра"
+    },
+
+    "ElementTracker": {
+      "Title":    "Трекер елементів",
+      "DecayAll": "Загасити все",
+      "ResetAll": "Скинути все"
+    },
+
+    "Ancestry": {
+      "harrower": "Harrower",
+      "human":    "Людина",
+      "inox":     "Inox",
+      "orchid":   "Orchid",
+      "quatryl":  "Quatryl",
+      "savvas":   "Savvas",
+      "valrath":  "Valrath",
+      "vermling": "Vermling"
+    },
+
+    "Class": {
+      "berserker":     "Берсерк",
+      "bladeswarm":    "Bladeswarm",
+      "bruiser":       "Bruiser",
+      "cragheart":     "Cragheart",
+      "doomstalker":   "Doomstalker",
+      "elementalist":  "Елементаліст",
+      "mindthief":     "Mindthief",
+      "plagueherald":  "Plagueherald",
+      "quartermaster": "Quartermaster",
+      "sawbones":      "Sawbones",
+      "silentknife":   "Silent Knife",
+      "soothsinger":   "Soothsinger",
+      "spellweaver":   "Spellweaver",
+      "sunkeeper":     "Sunkeeper",
+      "tinkerer":      "Tinkerer",
+      "wildfury":      "Wildfury"
+    }
+  }
+}
