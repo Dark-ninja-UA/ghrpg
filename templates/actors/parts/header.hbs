@@ -11,23 +11,23 @@
     </div>
     <div class="identity-row">
       <div class="field-group">
-        <label>Ancestry</label>
+        <label>{{localize "GHRPG.Sheet.Ancestry"}}</label>
         <select name="system.ancestry">
           {{selectOptions ancestryOptions selected=system.ancestry}}
         </select>
       </div>
       <div class="field-group">
-        <label>Class</label>
+        <label>{{localize "GHRPG.Sheet.Class"}}</label>
         <select name="system.class">
           {{selectOptions classOptions selected=system.class}}
         </select>
       </div>
       <div class="field-group field-narrow">
-        <label>Level</label>
+        <label>{{localize "GHRPG.Sheet.Level"}}</label>
         <input type="number" name="system.level" value="{{system.level}}" min="1" max="9" />
       </div>
       <div class="field-group">
-        <label>Faction</label>
+        <label>{{localize "GHRPG.Sheet.Faction"}}</label>
         <select name="system.faction">
           {{selectOptions factionOptions selected=system.faction}}
         </select>
@@ -36,7 +36,7 @@
     <div class="vitals-row">
       {{!-- HP --}}
       <div class="vital-block hp-block">
-        <label>HP</label>
+        <label>{{localize "GHRPG.Sheet.HP"}}</label>
         <div class="hp-display">
           <input type="number" name="system.hp.value" value="{{system.hp.value}}" min="0" max="{{system.hp.max}}" class="hp-current" />
           <span class="hp-sep">/</span>
@@ -48,7 +48,7 @@
       </div>
       {{!-- Gold --}}
       <div class="vital-block">
-        <label>Gold</label>
+        <label>{{localize "GHRPG.Sheet.Gold"}}</label>
         <input type="number" name="system.gold" value="{{system.gold}}" min="0" class="gold-input" />
       </div>
 

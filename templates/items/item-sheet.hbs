@@ -15,42 +15,42 @@
   <div class="skill-form">
     <div class="form-row">
       <div class="form-group">
-        <label>Source</label>
+        <label>{{localize "GHRPG.Sheet.Source"}}</label>
         <select name="system.sourceType">
           {{selectOptions sourceOptions selected=system.sourceType}}
         </select>
       </div>
       <div class="form-group narrow">
-        <label>Level</label>
+        <label>{{localize "GHRPG.Sheet.Level"}}</label>
         <input type="number" name="system.level" value="{{system.level}}" min="1" max="9" />
       </div>
       <div class="form-group narrow">
-        <label>Initiative</label>
+        <label>{{localize "GHRPG.Sheet.Initiative"}}</label>
         <input type="number" name="system.initiative" value="{{system.initiative}}" min="1" max="99" />
       </div>
     </div>
     <div class="form-group">
-      <label>Primary Action</label>
+      <label>{{localize "GHRPG.Sheet.PrimaryAction"}}</label>
       <textarea name="system.primaryAction" class="action-textarea"
                 placeholder="e.g. Attack 3; if Fire, add Wound">{{system.primaryAction}}</textarea>
     </div>
     <div class="form-group">
-      <label>Secondary Action</label>
+      <label>{{localize "GHRPG.Sheet.SecondaryAction"}}</label>
       <textarea name="system.secondaryAction" class="action-textarea"
                 placeholder="e.g. Move 2. Heal 1, yourself.">{{system.secondaryAction}}</textarea>
     </div>
     <div class="form-row">
       <div class="form-group check-group">
-        <label><input type="checkbox" name="system.lost" {{#if system.lost}}checked{{/if}} /> Lost (requires Full Rest)</label>
+        <label><input type="checkbox" name="system.lost" {{#if system.lost}}checked{{/if}} /> {{localize "GHRPG.Sheet.Lost"}}</label>
       </div>
       <div class="form-group check-group">
-        <label><input type="checkbox" name="system.prepared" {{#if system.prepared}}checked{{/if}} /> Prepared</label>
+        <label><input type="checkbox" name="system.prepared" {{#if system.prepared}}checked{{/if}} /> {{localize "GHRPG.Sheet.SkillPrepared"}}</label>
       </div>
       <div class="form-group check-group">
-        <label><input type="checkbox" name="system.expended" {{#if system.expended}}checked{{/if}} /> Expended</label>
+        <label><input type="checkbox" name="system.expended" {{#if system.expended}}checked{{/if}} /> {{localize "GHRPG.Sheet.Expended"}}</label>
       </div>
       <div class="form-group check-group">
-        <label><input type="checkbox" name="system.noExpend" {{#if system.noExpend}}checked{{/if}} title="Skill posts to chat but is never marked as expended" /> Not expended on use</label>
+        <label><input type="checkbox" name="system.noExpend" {{#if system.noExpend}}checked{{/if}} title="Skill posts to chat but is never marked as expended" /> {{localize "GHRPG.Sheet.NotExpendedOnUse"}}</label>
       </div>
     </div>
     <div class="form-group">
@@ -65,37 +65,37 @@
   <div class="skill-form">
     <div class="form-row">
       <div class="form-group narrow">
-        <label>Level</label>
+        <label>{{localize "GHRPG.Sheet.Level"}}</label>
         <input type="number" name="system.level" value="{{system.level}}" min="1" max="9" />
       </div>
       <div class="form-group narrow">
-        <label>Initiative</label>
+        <label>{{localize "GHRPG.Sheet.Initiative"}}</label>
         <input type="number" name="system.initiative" value="{{system.initiative}}" min="1" max="99" />
       </div>
       <div class="form-group narrow">
-        <label>Upgrade at Level</label>
+        <label>{{localize "GHRPG.Sheet.UpgradeAtLevel"}}</label>
         <input type="number" name="system.upgradeLevel" value="{{system.upgradeLevel}}" min="1" max="9" />
       </div>
       <div class="form-group check-group">
-        <label><input type="checkbox" name="system.passive" {{#if system.passive}}checked{{/if}} /> Passive Talent</label>
+        <label><input type="checkbox" name="system.passive" {{#if system.passive}}checked{{/if}} /> {{localize "GHRPG.Sheet.PassiveTalent"}}</label>
       </div>
     </div>
     {{#unless system.passive}}
     <div class="form-group">
-      <label>Primary Action</label>
+      <label>{{localize "GHRPG.Sheet.PrimaryAction"}}</label>
       <textarea name="system.primaryAction" class="action-textarea">{{system.primaryAction}}</textarea>
     </div>
     <div class="form-group">
-      <label>Secondary Action</label>
+      <label>{{localize "GHRPG.Sheet.SecondaryAction"}}</label>
       <textarea name="system.secondaryAction" class="action-textarea">{{system.secondaryAction}}</textarea>
     </div>
     {{/unless}}
     <div class="form-group">
-      <label>Description</label>
+      <label>{{localize "GHRPG.Sheet.Description"}}</label>
       <textarea name="system.description" class="bio-textarea">{{system.description}}</textarea>
     </div>
     <div class="form-group check-group">
-      <label><input type="checkbox" name="system.noExpend" {{#if system.noExpend}}checked{{/if}} title="Talent posts to chat but is never marked as expended" /> Not expended on use</label>
+      <label><input type="checkbox" name="system.noExpend" {{#if system.noExpend}}checked{{/if}} title="Talent posts to chat but is never marked as expended" /> {{localize "GHRPG.Sheet.NotExpendedOnUse"}}</label>
     </div>
   </div>
   {{/if}}
@@ -115,21 +115,21 @@
         <input type="number" name="system.bonus" value="{{system.bonus}}" min="2" max="4" />
       </div>
       <div class="form-group check-group">
-        <label><input type="checkbox" name="system.master" {{#if system.master}}checked{{/if}} /> Master Background</label>
+        <label><input type="checkbox" name="system.master" {{#if system.master}}checked{{/if}} /> {{localize "GHRPG.Sheet.MasterBackground"}}</label>
       </div>
     </div>
     {{#if system.master}}
     <div class="form-group">
-      <label>Prerequisite</label>
+      <label>{{localize "GHRPG.Sheet.Prerequisite"}}</label>
       <input type="text" name="system.prerequisite" value="{{system.prerequisite}}" placeholder="Required background" />
     </div>
     {{/if}}
     <div class="form-group">
-      <label>Description</label>
+      <label>{{localize "GHRPG.Sheet.Description"}}</label>
       <textarea name="system.description" class="bio-textarea">{{system.description}}</textarea>
     </div>
     <div class="form-group check-group">
-      <label><input type="checkbox" name="system.expended" {{#if system.expended}}checked{{/if}} /> Expended</label>
+      <label><input type="checkbox" name="system.expended" {{#if system.expended}}checked{{/if}} /> {{localize "GHRPG.Sheet.Expended"}}</label>
     </div>
   </div>
   {{/if}}
@@ -139,13 +139,13 @@
   <div class="skill-form">
     <div class="form-row">
       <div class="form-group">
-        <label>Slot</label>
+        <label>{{localize "GHRPG.Sheet.Slot"}}</label>
         <select name="system.slot">
           {{selectOptions slotOptions selected=system.slot}}
         </select>
       </div>
       <div class="form-group">
-        <label>Rarity</label>
+        <label>{{localize "GHRPG.Sheet.Rarity"}}</label>
         <select name="system.rarity">
           {{selectOptions rarityOptions selected=system.rarity}}
         </select>
@@ -170,17 +170,17 @@
       </div>
     </div>
     <div class="form-row checkboxes">
-      <label><input type="checkbox" name="system.equipped"   {{#if system.equipped}}checked{{/if}} />   Equipped</label>
-      <label><input type="checkbox" name="system.consumable" {{#if system.consumable}}checked{{/if}} /> Consumable</label>
-      <label><input type="checkbox" name="system.alchemic"   {{#if system.alchemic}}checked{{/if}} />   Alchemic</label>
+      <label><input type="checkbox" name="system.equipped"   {{#if system.equipped}}checked{{/if}} /> {{localize "GHRPG.Sheet.Equipped"}}</label>
+      <label><input type="checkbox" name="system.consumable" {{#if system.consumable}}checked{{/if}} /> {{localize "GHRPG.Sheet.Consumable"}}</label>
+      <label><input type="checkbox" name="system.alchemic"   {{#if system.alchemic}}checked{{/if}} /> {{localize "GHRPG.Sheet.Alchemic"}}</label>
       <label><input type="checkbox" name="system.expended"   {{#if system.expended}}checked{{/if}} />   Expended</label>
     </div>
     <div class="form-group">
-      <label>Crafting Type</label>
+      <label>{{localize "GHRPG.Sheet.CraftingType"}}</label>
       <input type="text" name="system.craftingType" value="{{system.craftingType}}" placeholder="e.g. Blacksmithing" />
     </div>
     <div class="form-group">
-      <label>Description</label>
+      <label>{{localize "GHRPG.Sheet.Description"}}</label>
       <textarea name="system.description" class="bio-textarea">{{system.description}}</textarea>
     </div>
   </div>
@@ -197,7 +197,7 @@
     </div>
 
     <div class="form-group">
-      <label>Description</label>
+      <label>{{localize "GHRPG.Sheet.Description"}}</label>
       <textarea name="system.description" class="bio-textarea"
                 placeholder="Describe this ancestry…">{{system.description}}</textarea>
     </div>
@@ -205,7 +205,7 @@
     {{!-- Linked Skills --}}
     <div class="ancestry-links-section">
       <h3 class="ancestry-links-title">
-        <i class="fas fa-scroll"></i> Ancestry Skills
+        <i class="fas fa-scroll"></i> {{localize "GHRPG.Sheet.AncestrySkills"}}
         <span class="ancestry-link-hint">Link skills that belong to this ancestry</span>
       </h3>
 
@@ -226,14 +226,14 @@
       {{/if}}
 
       <div class="ancestry-link-drop" data-drop-type="skill">
-        <i class="fas fa-plus-circle"></i> Drop a Skill here to link it
+        <i class="fas fa-plus-circle"></i> {{localize "GHRPG.Sheet.DropSkill"}}
       </div>
     </div>
 
     {{!-- Linked Talents --}}
     <div class="ancestry-links-section">
       <h3 class="ancestry-links-title">
-        <i class="fas fa-star"></i> Ancestry Talents
+        <i class="fas fa-star"></i> {{localize "GHRPG.Sheet.AncestryTalents"}}
         <span class="ancestry-link-hint">Link talents that belong to this ancestry</span>
       </h3>
 
@@ -250,11 +250,11 @@
         {{/each}}
       </div>
       {{else}}
-      <p class="ancestry-empty-hint">No talents linked yet. Drop a Talent item here.</p>
+      <p class="ancestry-empty-hint">{{localize "GHRPG.Sheet.NoTalentsLinked"}}</p>
       {{/if}}
 
       <div class="ancestry-link-drop" data-drop-type="talent">
-        <i class="fas fa-plus-circle"></i> Drop a Talent here to link it
+        <i class="fas fa-plus-circle"></i> {{localize "GHRPG.Sheet.DropTalent"}}
       </div>
     </div>
 
@@ -266,7 +266,7 @@
   <div class="ancestry-form">
 
     <div class="form-group">
-      <label>Description</label>
+      <label>{{localize "GHRPG.Sheet.Description"}}</label>
       <textarea name="system.description" class="bio-textarea"
                 placeholder="Describe this class…">{{system.description}}</textarea>
     </div>
@@ -274,7 +274,7 @@
     {{!-- Starting Attributes --}}
     <div class="ancestry-links-section">
       <h3 class="ancestry-links-title">
-        <i class="fas fa-chart-bar"></i> Starting Attribute Bonuses
+        <i class="fas fa-chart-bar"></i> {{localize "GHRPG.Sheet.StartingAttributes"}}
         <span class="ancestry-link-hint">Mandatory bonuses applied at character creation</span>
       </h3>
       <div class="class-attr-grid">
@@ -291,7 +291,7 @@
     {{!-- Linked Skills --}}
     <div class="ancestry-links-section">
       <h3 class="ancestry-links-title">
-        <i class="fas fa-scroll"></i> Class Skills
+        <i class="fas fa-scroll"></i> {{localize "GHRPG.Sheet.ClassSkills"}}
         <span class="ancestry-link-hint">Drag skills to link them to this class</span>
       </h3>
       {{#if linkedSkills.length}}
@@ -308,17 +308,17 @@
         {{/each}}
       </div>
       {{else}}
-      <p class="ancestry-empty-hint">No skills linked yet. Drop a Skill item here.</p>
+      <p class="ancestry-empty-hint">{{localize "GHRPG.Sheet.NoSkillsLinked"}}</p>
       {{/if}}
       <div class="ancestry-link-drop" data-drop-type="skill">
-        <i class="fas fa-plus-circle"></i> Drop a Skill here to link it
+        <i class="fas fa-plus-circle"></i> {{localize "GHRPG.Sheet.DropSkill"}}
       </div>
     </div>
 
     {{!-- Linked Talents --}}
     <div class="ancestry-links-section">
       <h3 class="ancestry-links-title">
-        <i class="fas fa-star"></i> Class Talents
+        <i class="fas fa-star"></i> {{localize "GHRPG.Sheet.ClassTalents"}}
         <span class="ancestry-link-hint">Drag talents to link them to this class</span>
       </h3>
       {{#if linkedTalents.length}}
@@ -334,10 +334,10 @@
         {{/each}}
       </div>
       {{else}}
-      <p class="ancestry-empty-hint">No talents linked yet. Drop a Talent item here.</p>
+      <p class="ancestry-empty-hint">{{localize "GHRPG.Sheet.NoTalentsLinked"}}</p>
       {{/if}}
       <div class="ancestry-link-drop" data-drop-type="talent">
-        <i class="fas fa-plus-circle"></i> Drop a Talent here to link it
+        <i class="fas fa-plus-circle"></i> {{localize "GHRPG.Sheet.DropTalent"}}
       </div>
     </div>
 
@@ -365,7 +365,7 @@
         {{/each}}
       </div>
       {{else}}
-      <p class="ancestry-empty-hint">No perks defined. Click "Add Perk" to create one.</p>
+      <p class="ancestry-empty-hint">{{localize "GHRPG.Sheet.NoPerks"}}</p>
       {{/if}}
     </div>
 

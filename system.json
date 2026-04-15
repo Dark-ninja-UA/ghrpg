@@ -2,7 +2,7 @@
   "id": "ghrpg",
   "title": "Gloomhaven: The Roleplaying Game",
   "description": "An unofficial Foundry VTT system for Gloomhaven: The Roleplaying Game by Cephalofair Games.",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "compatibility": {
     "minimum": "13",
     "verified": "13",

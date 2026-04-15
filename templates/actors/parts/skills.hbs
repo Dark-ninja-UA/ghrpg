@@ -10,12 +10,12 @@
   </div>
   {{else}}
   <div class="ancestry-banner ancestry-banner-empty">
-    <i class="fas fa-dna"></i> No ancestry selected — set one in the header to see ancestry skills.
+    <i class="fas fa-dna"></i> {{localize "GHRPG.Notifications.NoAncestrySelected"}}
   </div>
   {{/if}}
 
   <div class="skills-header">
-    <h2 class="section-title">Skills</h2>
+    <h2 class="section-title">{{localize "GHRPG.Sheet.Skills"}}</h2>
     <div class="prepared-counts">
       <span class="prepared-count ancestry-count {{#if (gte preparedAncestry 2)}}count-full{{/if}}"
             title="Ancestry skills prepared (max 2)">

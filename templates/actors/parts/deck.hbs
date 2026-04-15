@@ -11,13 +11,13 @@
         <h2 class="section-title">Draw</h2>
         <div class="draw-buttons">
           <button type="button" class="draw-btn draw-normal" data-action="drawCard" data-mode="normal">
-            <i class="fas fa-hand"></i> Normal
+            <i class="fas fa-hand"></i> {{localize "GHRPG.Sheet.DrawNormal"}}
           </button>
           <button type="button" class="draw-btn draw-advantage" data-action="drawCard" data-mode="advantage">
-            <i class="fas fa-angles-up"></i> Advantage
+            <i class="fas fa-angles-up"></i> {{localize "GHRPG.Sheet.DrawAdvantage"}}
           </button>
           <button type="button" class="draw-btn draw-disadvantage" data-action="drawCard" data-mode="disadvantage">
-            <i class="fas fa-angles-down"></i> Disadvantage
+            <i class="fas fa-angles-down"></i> {{localize "GHRPG.Sheet.DrawDisadvantage"}}
           </button>
         </div>
         <div class="deck-counters-row">
@@ -28,11 +28,11 @@
         </div>
         <div class="deck-management">
           <button type="button" class="reshuffle-btn" data-action="reshuffleDeck">
-            <i class="fas fa-shuffle"></i> Reshuffle
+            <i class="fas fa-shuffle"></i> {{localize "GHRPG.Sheet.ReshuffleBtn"}}
           </button>
           {{#if (eq deckCount 0)}}
           <button type="button" class="reshuffle-btn init-btn" data-action="initializeDeck">
-            <i class="fas fa-layer-group"></i> Initialize
+            <i class="fas fa-layer-group"></i> {{localize "GHRPG.Sheet.InitializeBtn"}}
           </button>
           {{/if}}
         </div>
@@ -107,13 +107,13 @@
 
       {{!-- Last Drawn --}}
       <div class="section-block">
-        <h2 class="section-title">Last Drawn</h2>
+        <h2 class="section-title">{{localize "GHRPG.Sheet.LastDrawn"}}</h2>
         {{#if lastDrawn}}
         <div class="last-drawn-block">
           {{#if (eq lastDrawn.mode "advantage")}}
-          <div class="draw-mode-badge mode-advantage"><i class="fas fa-angles-up"></i> Advantage</div>
+          <div class="draw-mode-badge mode-advantage"><i class="fas fa-angles-up"></i> {{localize "GHRPG.Sheet.DrawAdvantage"}}</div>
           {{else if (eq lastDrawn.mode "disadvantage")}}
-          <div class="draw-mode-badge mode-disadvantage"><i class="fas fa-angles-down"></i> Disadvantage</div>
+          <div class="draw-mode-badge mode-disadvantage"><i class="fas fa-angles-down"></i> {{localize "GHRPG.Sheet.DrawDisadvantage"}}</div>
           {{/if}}
           {{#if (gt lastDrawn.allDrawn.length 1)}}
           <div class="all-drawn-cards">
@@ -183,7 +183,7 @@
           </div>
         </div>
         {{else}}
-        <p class="empty-notice">No card drawn yet.</p>
+        <p class="empty-notice">{{localize "GHRPG.Sheet.NoCardDrawn"}}.</p>
         {{/if}}
       </div>
 
@@ -353,7 +353,7 @@
                  min="0" class="bonus-perks-input" />
         </span>
         {{else}}
-        <span class="perk-no-class">Assign a class to see perks</span>
+        <span class="perk-no-class">{{localize "GHRPG.Notifications.NoAncestrySelected"}}</span>
         {{/if}}
       </div>
     </div>
@@ -380,7 +380,7 @@
       {{/each}}
     </div>
     {{else}}
-    <p class="ancestry-empty-hint">No perks defined on the selected class. Open the class item to add perks.</p>
+    <p class="ancestry-empty-hint">{{localize "GHRPG.Sheet.NoPerks"}}</p>
     {{/if}}
     {{/if}}
 

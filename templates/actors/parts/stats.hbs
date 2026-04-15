@@ -3,7 +3,7 @@
 
   {{!-- ─── Attributes ─── --}}
   <div class="section-block attributes-section">
-    <h2 class="section-title">Attributes</h2>
+    <h2 class="section-title">{{localize "GHRPG.Sheet.Attributes"}}</h2>
     <div class="attributes-grid">
       {{#each attributes}}
       <div class="attribute-item" data-attribute="{{key}}">
@@ -29,10 +29,10 @@
 
   {{!-- ─── Conditions ─── --}}
   <div class="section-block conditions-section">
-    <h2 class="section-title">Conditions</h2>
+    <h2 class="section-title">{{localize "GHRPG.Sheet.Conditions"}}</h2>
     <div class="conditions-row">
       <div class="conditions-group">
-        <span class="cond-group-label positive-label">Positive</span>
+        <span class="cond-group-label positive-label">{{localize "GHRPG.Sheet.Positive"}}</span>
         {{#each conditions.positive}}
         <button type="button"
                 class="condition-btn {{#if active}}active{{/if}}"
@@ -52,7 +52,7 @@
         {{/each}}
       </div>
       <div class="conditions-group negative-group">
-        <span class="cond-group-label negative-label">Negative</span>
+        <span class="cond-group-label negative-label">{{localize "GHRPG.Sheet.Negative"}}</span>
         {{#each conditions.negative}}
         <button type="button"
                 class="condition-btn negative {{#if active}}active{{/if}}"
@@ -78,7 +78,7 @@
   {{!-- ─── Backgrounds ─── --}}
   <div class="section-block backgrounds-section">
     <h2 class="section-title">
-      Backgrounds
+      {{localize "GHRPG.Sheet.Backgrounds"}}
       <button type="button" class="add-btn" data-action="createItem" data-type="background" title="Add Background">
         <i class="fas fa-plus"></i>
       </button>
@@ -103,13 +103,13 @@
       {{/each}}
     </div>
     {{else}}
-    <p class="empty-notice">No backgrounds yet. <a data-action="createItem" data-type="background">Add one.</a></p>
+    <p class="empty-notice">{{localize "GHRPG.Sheet.NoBackgrounds"}}</p>
     {{/if}}
   </div>
 
   {{!-- ─── Rest Controls ─── --}}
   <div class="section-block rest-section">
-    <h2 class="section-title">Resting</h2>
+    <h2 class="section-title">{{localize "GHRPG.Sheet.Resting"}}</h2>
     <div class="rest-buttons">
       <div class="rest-btn quick-breath-btn" data-action="quickBreath" role="button" tabindex="0">
         <div class="rest-btn-title"><i class="fas fa-wind"></i> Quick Breath</div>

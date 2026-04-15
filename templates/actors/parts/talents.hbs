@@ -2,7 +2,7 @@
 <section class="tab sheet-body" data-tab="talents" data-group="sheet">
 
   <div class="skills-header">
-    <h2 class="section-title">Talents</h2>
+    <h2 class="section-title">{{localize "GHRPG.Sheet.Talents"}}</h2>
     <div class="skill-actions-bar">
       <button type="button" class="add-btn" data-action="createItem" data-type="talent">
         <i class="fas fa-plus"></i> Add Talent
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <p class="section-note">Talents are always available in combat and are never expended.</p>
+  <p class="section-note">{{localize "GHRPG.Sheet.TalentsHint"}}</p>
 
   {{#if talents.length}}
   <div class="items-list talents-list">
