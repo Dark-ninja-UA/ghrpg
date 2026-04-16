@@ -22,6 +22,31 @@ import { PerkEditorDialog }     from "./apps/perk-editor.mjs";
 Hooks.once("init", () => {
   console.log("GHRPG | Initialising Gloomhaven: The Roleplaying Game system");
 
+  // ── Register conditions as Foundry status effects ───────────
+  const GHRPG_CONDITIONS = [
+    "invisible","regenerate","safeguard","strengthen","ward",
+    "immobilize","muddle","pacify","poison","stun","wound"
+  ];
+  // Build localized name map (falls back to capitalized key before game.i18n ready)
+  const conditionLabel = key => {
+    const map = {
+      invisible:"Invisible", regenerate:"Regenerate", safeguard:"Safeguard",
+      strengthen:"Strengthen", ward:"Ward", immobilize:"Immobilize",
+      muddle:"Muddle", pacify:"Pacify", poison:"Poison", stun:"Stun", wound:"Wound"
+    };
+    return map[key] ?? key.charAt(0).toUpperCase() + key.slice(1);
+  };
+  CONFIG.statusEffects = [
+    ...GHRPG_CONDITIONS.map(key => ({
+      id:   key,
+      name: conditionLabel(key),
+      icon: `systems/ghrpg/icons/conditions/${key}.png`,
+    })),
+    // Keep Foundry's dead/defeated for token use
+    { id: "dead",     name: "Dead",     icon: "icons/svg/skull.svg" },
+    { id: "defeated", name: "Defeated", icon: "icons/svg/downgrade.svg" },
+  ];
+
   // ── Custom document classes ──────────────────────────────────
   CONFIG.Actor.documentClass = GHRPGActor;
   CONFIG.Item.documentClass  = GHRPGItem;
@@ -151,6 +176,32 @@ Hooks.once("ready", () => {
 
     buildDeck,
   };
+});
+
+/* ─────────────────────────────────────────
+   Token status effect → actor condition sync (two-way)
+───────────────────────────────────────── */
+Hooks.on("createActiveEffect", (effect, options, userId) => {
+  if (userId !== game.userId) return;
+  const actor = effect.parent;
+  if (!actor || actor.documentName !== "Actor") return;
+  const condKey = effect.statuses?.first?.() ?? [...(effect.statuses ?? [])][0];
+  if (!condKey || !actor.system.conditions?.[condKey]) return;
+  // Only update if not already active (avoid loop from toggleCondition)
+  if (!actor.system.conditions[condKey].active) {
+    actor.update({ [`system.conditions.${condKey}.active`]: true });
+  }
+});
+
+Hooks.on("deleteActiveEffect", (effect, options, userId) => {
+  if (userId !== game.userId) return;
+  const actor = effect.parent;
+  if (!actor || actor.documentName !== "Actor") return;
+  const condKey = effect.statuses?.first?.() ?? [...(effect.statuses ?? [])][0];
+  if (!condKey || !actor.system.conditions?.[condKey]) return;
+  if (actor.system.conditions[condKey].active) {
+    actor.update({ [`system.conditions.${condKey}.active`]: false });
+  }
 });
 
 /* ─────────────────────────────────────────

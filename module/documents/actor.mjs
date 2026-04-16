@@ -760,6 +760,26 @@ export class GHRPGActor extends Actor {
 
   async toggleCondition(conditionKey) {
     const current = this.system.conditions?.[conditionKey]?.active ?? false;
-    await this.update({ [`system.conditions.${conditionKey}.active`]: !current });
+    const newVal   = !current;
+    await this.update({ [`system.conditions.${conditionKey}.active`]: newVal });
+
+    // Sync to token Active Effects
+    const effectId = `ghrpg.${conditionKey}`;
+    for (const token of this.getActiveTokens()) {
+      const existing = token.document.actor.effects.find(e => e.statuses?.has(conditionKey));
+      if (newVal && !existing) {
+        const statusDef = CONFIG.statusEffects.find(s => s.id === conditionKey);
+        if (statusDef) {
+          await token.document.actor.createEmbeddedDocuments("ActiveEffect", [{
+            name:     statusDef.name,
+            icon:     statusDef.icon,
+            statuses: [conditionKey],
+            flags:    { ghrpg: { condition: conditionKey } }
+          }]);
+        }
+      } else if (!newVal && existing) {
+        await token.document.actor.deleteEmbeddedDocuments("ActiveEffect", [existing.id]);
+      }
+    }
   }
 }
