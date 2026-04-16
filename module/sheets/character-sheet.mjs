@@ -152,8 +152,8 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
       value: system.attributes?.[key]?.value ?? 0
     }));
 
-    const positiveKeys = ["bless","invisible","regenerate","safeguard","strengthen","ward"];
-    const negativeKeys = ["curse","immobilize","muddle","pacify","poison","stun","wound"];
+    const positiveKeys = ["invisible","regenerate","safeguard","strengthen","ward"];
+    const negativeKeys = ["immobilize","muddle","pacify","poison","stun","wound"];
     const conditions = {
       positive: positiveKeys.map(key => ({
         key,
