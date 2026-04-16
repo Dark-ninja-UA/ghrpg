@@ -14,6 +14,7 @@ import { buildDeck }            from "./helpers/modifier-deck.mjs";
 import { ElementTracker }       from "./apps/element-tracker.mjs";
 import { GMDeckApp }            from "./apps/gm-deck.mjs";
 import { PerkEditorDialog }     from "./apps/perk-editor.mjs";
+import { registerCombatHooks }   from "./apps/combat-tracker.mjs";
 
 /* ─────────────────────────────────────────
    Hooks.once("init")
@@ -90,6 +91,7 @@ Hooks.once("init", () => {
     "systems/ghrpg/templates/apps/element-tracker.hbs",
     "systems/ghrpg/templates/apps/gm-deck.hbs",
     "systems/ghrpg/templates/apps/perk-editor.hbs",
+    "systems/ghrpg/templates/apps/planning-dialog.hbs",
   ];
   loadTemplates(templates);
 
@@ -123,6 +125,7 @@ Hooks.on("createActor", async (actor) => {
 Hooks.once("ready", () => {
   // Create singleton tracker instance
   const tracker = new ElementTracker();
+  registerCombatHooks();
   const gmDeck  = new GMDeckApp();
 
   game.ghrpg = {

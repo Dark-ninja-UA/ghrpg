@@ -1512,3 +1512,137 @@
 .condition-btn.active.cond-poison     .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(90deg) brightness(1.1); }
 .condition-btn.active.cond-stun       .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(330deg) brightness(1.1); }
 .condition-btn.active.cond-wound      .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(330deg) brightness(1.1); }
+
+/* ─── Combat Tracker Controls ────────────────────────────────── */
+.ghrpg-combat-controls {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  padding: 6px 8px; background: #1a1510; border-bottom: 1px solid #3a2e1e;
+}
+.ghrpg-combat-btn {
+  font-size: 11px; font-weight: bold; padding: 4px 10px;
+  background: #1a1510; border: 1px solid; border-radius: 3px;
+  cursor: pointer; transition: background 0.15s; letter-spacing: 0.3px;
+}
+.ghrpg-combat-btn:hover { background: #2a2010; filter: brightness(1.2); }
+.ghrpg-phase-badge {
+  margin-left: auto; font-size: 10px; font-weight: bold;
+  padding: 3px 8px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.phase-none       { color: #666; background: #111; border: 1px solid #333; }
+.phase-planning   { color: #ccaa44; background: #1a1800; border: 1px solid #664400; }
+.phase-resolution { color: #ee6644; background: #1a0a08; border: 1px solid #882200; }
+
+/* ─── Planning Dialog ────────────────────────────────────────── */
+.ghrpg.planning-dialog .window-content { padding: 0; overflow: hidden; }
+.planning-wrap { display: flex; flex-direction: column; height: 100%; }
+.planning-confirmed .plan-card-item { pointer-events: none; opacity: 0.6; }
+.planning-confirmed .slot-card { opacity: 1; }
+
+.planning-slots {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 12px; background: var(--ghrpg-bg-panel);
+  border-bottom: 1px solid var(--ghrpg-border);
+}
+.planning-slot {
+  flex: 1; border: 2px dashed var(--ghrpg-border); border-radius: 6px;
+  padding: 8px; min-height: 90px; transition: border-color 0.15s;
+}
+.planning-slot.slot-filled { border-style: solid; border-color: var(--ghrpg-border-gold); }
+.slot-label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--ghrpg-text-muted); margin-bottom: 5px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.slot-init-btn {
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  background: var(--ghrpg-bg); border: 1px solid var(--ghrpg-border);
+  color: var(--ghrpg-text-muted); cursor: pointer;
+}
+.slot-init-btn.init-active { border-color: var(--ghrpg-gold); color: var(--ghrpg-gold-light); background: #1a1400; }
+.slot-card { display: flex; gap: 6px; align-items: flex-start; }
+.slot-card-img { width: 36px; height: 36px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
+.slot-card-info { flex: 1; }
+.slot-card-name { font-size: 12px; font-weight: bold; color: var(--ghrpg-gold-light); }
+.slot-card-action { font-size: 10px; color: var(--ghrpg-text-muted); margin-top: 1px; }
+.slot-empty { font-size: 11px; color: var(--ghrpg-text-muted); font-style: italic; text-align: center; padding: 12px 0; }
+
+.planning-initiative {
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; width: 64px;
+}
+.init-display { text-align: center; }
+.init-label { font-size: 9px; text-transform: uppercase; color: var(--ghrpg-text-muted); letter-spacing: 0.5px; }
+.init-value {
+  font-size: 28px; font-weight: 900; color: var(--ghrpg-gold-light);
+  line-height: 1; margin-top: 2px;
+}
+.init-empty { color: var(--ghrpg-border); }
+
+.planning-actions {
+  padding: 8px 12px; display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid var(--ghrpg-border); background: var(--ghrpg-bg);
+}
+.planning-ready-badge {
+  color: #66cc66; font-size: 12px; font-weight: bold;
+  display: flex; align-items: center; gap: 5px;
+}
+.btn-disabled { opacity: 0.4; cursor: not-allowed; }
+
+.planning-divider {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--ghrpg-text-muted); padding: 6px 12px 2px;
+  background: var(--ghrpg-bg);
+}
+.planning-card-list {
+  flex: 1; overflow-y: auto; padding: 6px 8px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.plan-card-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 6px 8px; border-radius: 5px; cursor: pointer;
+  border: 1px solid var(--ghrpg-border); background: var(--ghrpg-bg-item);
+  transition: border-color 0.15s, background 0.15s;
+}
+.plan-card-item:hover  { border-color: var(--ghrpg-border-gold); background: var(--ghrpg-bg-section); }
+.plan-card-item.card-selected { border-color: var(--ghrpg-gold); background: #1a1400; }
+.plan-card-item.card-slot0 { border-color: #4488ff; background: #080d1a; }
+.plan-card-item.card-slot1 { border-color: #44cc88; background: #080f0d; }
+.plan-card-img { width: 32px; height: 32px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
+.plan-card-body { flex: 1; }
+.plan-card-name {
+  font-size: 12px; font-weight: bold; color: var(--ghrpg-text);
+  display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
+}
+.plan-card-type-badge {
+  font-size: 9px; padding: 1px 5px; border-radius: 8px;
+  background: #1a1a3a; border: 1px solid #4444aa; color: #8888cc;
+}
+.plan-slot-badge {
+  font-size: 9px; padding: 1px 5px; border-radius: 8px; font-weight: normal;
+}
+.slot0-badge { background: #080d1a; border: 1px solid #4488ff; color: #88aaff; }
+.slot1-badge { background: #080f0d; border: 1px solid #44cc88; color: #88ddaa; }
+.plan-card-init { font-size: 10px; color: var(--ghrpg-gold); margin-top: 1px; }
+.plan-card-primary, .plan-card-secondary { font-size: 10px; color: var(--ghrpg-text-muted); }
+.planning-empty { font-size: 12px; color: var(--ghrpg-text-muted); font-style: italic; text-align: center; padding: 20px; }
+
+/* ─── Reveal chat message ────────────────────────────────────── */
+.ghrpg .reveal-list { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.reveal-entry {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px; background: var(--ghrpg-bg-panel); border-radius: 5px;
+  border: 1px solid var(--ghrpg-border);
+}
+.reveal-rank {
+  font-size: 18px; font-weight: 900; color: var(--ghrpg-gold-light);
+  width: 24px; text-align: center; flex-shrink: 0;
+}
+.reveal-actor-img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.reveal-actor-name { font-size: 13px; font-weight: bold; flex: 1; }
+.reveal-initiative { font-size: 14px; font-weight: 900; color: var(--ghrpg-gold); flex-shrink: 0; }
+.reveal-cards { display: flex; flex-direction: column; gap: 3px; }
+.reveal-card-row { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--ghrpg-text-muted); }
+.reveal-card-label { font-weight: bold; flex-shrink: 0; }
+.reveal-card-label.init-card { color: var(--ghrpg-gold); }
+.reveal-card-img { width: 18px; height: 18px; border-radius: 2px; object-fit: cover; }
+.reveal-card-name { color: var(--ghrpg-text); }

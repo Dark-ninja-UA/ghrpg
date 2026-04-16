@@ -1,0 +1,109 @@
+{{!-- templates/apps/planning-dialog.hbs --}}
+<div class="planning-wrap {{#if confirmed}}planning-confirmed{{/if}}">
+
+  {{!-- Selected slots --}}
+  <div class="planning-slots">
+    <div class="planning-slot {{#if card0}}slot-filled{{/if}}" data-slot="0">
+      <div class="slot-label">Card 1
+        {{#if card0}}
+        <button type="button" class="slot-init-btn {{#if (eq initiativeSlot 0)}}init-active{{/if}}"
+                data-action="setInitiative" data-slot="0"
+                title="Use this card's initiative">
+          <i class="fas fa-flag"></i> {{card0.system.initiative}}
+        </button>
+        {{/if}}
+      </div>
+      {{#if card0}}
+      <div class="slot-card">
+        <img class="slot-card-img" src="{{card0.img}}" />
+        <div class="slot-card-info">
+          <div class="slot-card-name">{{card0.name}}</div>
+          <div class="slot-card-action"><strong>▶</strong> {{card0.system.primaryAction}}</div>
+          <div class="slot-card-action"><strong>▷</strong> {{card0.system.secondaryAction}}</div>
+        </div>
+      </div>
+      {{else}}
+      <div class="slot-empty">Click a card to assign</div>
+      {{/if}}
+    </div>
+
+    <div class="planning-initiative">
+      <div class="init-display">
+        <div class="init-label">Initiative</div>
+        <div class="init-value {{#unless initiative}}init-empty{{/unless}}">
+          {{#if initiative}}{{initiative}}{{else}}—{{/if}}
+        </div>
+      </div>
+    </div>
+
+    <div class="planning-slot {{#if card1}}slot-filled{{/if}}" data-slot="1">
+      <div class="slot-label">Card 2
+        {{#if card1}}
+        <button type="button" class="slot-init-btn {{#if (eq initiativeSlot 1)}}init-active{{/if}}"
+                data-action="setInitiative" data-slot="1"
+                title="Use this card's initiative">
+          <i class="fas fa-flag"></i> {{card1.system.initiative}}
+        </button>
+        {{/if}}
+      </div>
+      {{#if card1}}
+      <div class="slot-card">
+        <img class="slot-card-img" src="{{card1.img}}" />
+        <div class="slot-card-info">
+          <div class="slot-card-name">{{card1.name}}</div>
+          <div class="slot-card-action"><strong>▶</strong> {{card1.system.primaryAction}}</div>
+          <div class="slot-card-action"><strong>▷</strong> {{card1.system.secondaryAction}}</div>
+        </div>
+      </div>
+      {{else}}
+      <div class="slot-empty">Click a card to assign</div>
+      {{/if}}
+    </div>
+  </div>
+
+  {{!-- Action buttons --}}
+  <div class="planning-actions">
+    {{#if confirmed}}
+    <div class="planning-ready-badge"><i class="fas fa-check-circle"></i> Ready! Waiting for GM to reveal.</div>
+    <button type="button" class="reshuffle-btn" data-action="change">
+      <i class="fas fa-undo"></i> Change Selection
+    </button>
+    {{else}}
+    <button type="button" class="card-restore-btn {{#unless canConfirm}}btn-disabled{{/unless}}"
+            data-action="confirm" {{#unless canConfirm}}disabled{{/unless}}>
+      <i class="fas fa-check"></i> Confirm
+    </button>
+    {{/if}}
+  </div>
+
+  <div class="planning-divider">Available Cards</div>
+
+  {{!-- Card list --}}
+  <div class="planning-card-list">
+    {{#if cards.length}}
+    {{#each cards}}
+    <div class="plan-card-item {{#if selected}}card-selected{{/if}} {{#if slot0}}card-slot0{{/if}} {{#if slot1}}card-slot1{{/if}}"
+         data-item-id="{{id}}"
+         title="{{name}} — Initiative {{initiative}}">
+      <img class="plan-card-img" src="{{img}}" />
+      <div class="plan-card-body">
+        <div class="plan-card-name">
+          {{name}}
+          {{#if (eq type "talent")}}<span class="plan-card-type-badge">Talent</span>{{/if}}
+          {{#if slot0}}<span class="plan-slot-badge slot0-badge">Card 1</span>{{/if}}
+          {{#if slot1}}<span class="plan-slot-badge slot1-badge">Card 2</span>{{/if}}
+        </div>
+        <div class="plan-card-init"><i class="fas fa-flag"></i> {{initiative}}</div>
+        <div class="plan-card-primary"><strong>▶</strong> {{primary}}</div>
+        {{#if secondary}}
+        <div class="plan-card-secondary"><strong>▷</strong> {{secondary}}</div>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <p class="planning-empty">No prepared skills or talents available. Rest to prepare skills first.</p>
+    {{/if}}
+  </div>
+
+</div>
