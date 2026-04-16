@@ -40,11 +40,11 @@ Hooks.once("init", () => {
     ...GHRPG_CONDITIONS.map(key => ({
       id:   key,
       name: conditionLabel(key),
-      icon: `systems/ghrpg/icons/conditions/${key}.png`,
+      img:  `systems/ghrpg/icons/conditions/${key}.png`,
     })),
     // Keep Foundry's dead/defeated for token use
-    { id: "dead",     name: "Dead",     icon: "icons/svg/skull.svg" },
-    { id: "defeated", name: "Defeated", icon: "icons/svg/downgrade.svg" },
+    { id: "dead",     name: "Dead",     img: "icons/svg/skull.svg" },
+    { id: "defeated", name: "Defeated", img: "icons/svg/downgrade.svg" },
   ];
 
   // ── Custom document classes ──────────────────────────────────
@@ -185,9 +185,13 @@ Hooks.on("createActiveEffect", (effect, options, userId) => {
   if (userId !== game.userId) return;
   const actor = effect.parent;
   if (!actor || actor.documentName !== "Actor") return;
-  const condKey = effect.statuses?.first?.() ?? [...(effect.statuses ?? [])][0];
+  // Skip effects we created ourselves via toggleCondition (they have our flag)
+  if (effect.flags?.ghrpg?.fromSheet) return;
+  // Get condition key from statuses Set
+  const condKey = effect.statuses instanceof Set
+    ? [...effect.statuses][0]
+    : (Array.isArray(effect.statuses) ? effect.statuses[0] : null);
   if (!condKey || !actor.system.conditions?.[condKey]) return;
-  // Only update if not already active (avoid loop from toggleCondition)
   if (!actor.system.conditions[condKey].active) {
     actor.update({ [`system.conditions.${condKey}.active`]: true });
   }
@@ -197,7 +201,11 @@ Hooks.on("deleteActiveEffect", (effect, options, userId) => {
   if (userId !== game.userId) return;
   const actor = effect.parent;
   if (!actor || actor.documentName !== "Actor") return;
-  const condKey = effect.statuses?.first?.() ?? [...(effect.statuses ?? [])][0];
+  // Skip effects we deleted ourselves via toggleCondition
+  if (effect.flags?.ghrpg?.fromSheet) return;
+  const condKey = effect.statuses instanceof Set
+    ? [...effect.statuses][0]
+    : (Array.isArray(effect.statuses) ? effect.statuses[0] : null);
   if (!condKey || !actor.system.conditions?.[condKey]) return;
   if (actor.system.conditions[condKey].active) {
     actor.update({ [`system.conditions.${condKey}.active`]: false });

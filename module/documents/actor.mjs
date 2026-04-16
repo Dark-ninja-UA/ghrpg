@@ -763,22 +763,26 @@ export class GHRPGActor extends Actor {
     const newVal   = !current;
     await this.update({ [`system.conditions.${conditionKey}.active`]: newVal });
 
-    // Sync to token Active Effects
-    const effectId = `ghrpg.${conditionKey}`;
+    // Sync to token Active Effects — tag with fromSheet so hooks don't loop
+    const statusDef = CONFIG.statusEffects.find(s => s.id === conditionKey);
+    if (!statusDef) return;
+
     for (const token of this.getActiveTokens()) {
-      const existing = token.document.actor.effects.find(e => e.statuses?.has(conditionKey));
+      const tokenActor = token.document.actor;
+      const existing = tokenActor.effects.find(e => {
+        const statuses = e.statuses instanceof Set ? [...e.statuses] : (e.statuses ?? []);
+        return statuses.includes(conditionKey);
+      });
+
       if (newVal && !existing) {
-        const statusDef = CONFIG.statusEffects.find(s => s.id === conditionKey);
-        if (statusDef) {
-          await token.document.actor.createEmbeddedDocuments("ActiveEffect", [{
-            name:     statusDef.name,
-            icon:     statusDef.icon,
-            statuses: [conditionKey],
-            flags:    { ghrpg: { condition: conditionKey } }
-          }]);
-        }
+        await tokenActor.createEmbeddedDocuments("ActiveEffect", [{
+          name:     statusDef.name,
+          img:      statusDef.img,
+          statuses: [conditionKey],
+          flags:    { ghrpg: { condition: conditionKey, fromSheet: true } }
+        }]);
       } else if (!newVal && existing) {
-        await token.document.actor.deleteEmbeddedDocuments("ActiveEffect", [existing.id]);
+        await tokenActor.deleteEmbeddedDocuments("ActiveEffect", [existing.id]);
       }
     }
   }
