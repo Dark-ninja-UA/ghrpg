@@ -250,6 +250,37 @@ Hooks.on("getSceneControlButtons", (controls) => {
       onClick: () => game.ghrpg?.openGMDeck(),
       visible: game.user.isGM,
     };
+    tokens.tools["ghrpg-planning"] = {
+      name:    "ghrpg-planning",
+      title:   "Reopen Planning Dialog",
+      icon:    "fas fa-hand-paper",
+      button:  true,
+      visible: !game.user.isGM,
+      onClick: () => {
+        const { openPlanningDialogForActor } = game.ghrpg?._combatTracker ?? {};
+        const combat = game.combat;
+        if (!combat || combat.getFlag("ghrpg","phase") !== "planning") {
+          ui.notifications.warn("No planning phase active.");
+          return;
+        }
+        const myActor = game.actors.find(a =>
+          a.isOwner && a.hasPlayerOwner &&
+          combat.combatants.some(c => c.actorId === a.id)
+        );
+        if (myActor) {
+          // Import and open
+          import("./apps/planning-dialog.mjs").then(({ PlanningDialog }) => {
+            // Close existing
+            for (const app of Object.values(ui.windows ?? {})) {
+              if (app instanceof PlanningDialog && app.actor?.id === myActor.id) app.close();
+            }
+            new PlanningDialog(myActor).render(true);
+          });
+        } else {
+          ui.notifications.warn("You are not a combatant in the current encounter.");
+        }
+      },
+    };
     tokens.tools["ghrpg-elements"] = {
       name:    "ghrpg-elements",
       title:   "Element Tracker",

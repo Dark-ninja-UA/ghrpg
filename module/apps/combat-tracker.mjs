@@ -31,12 +31,22 @@ export function registerCombatHooks() {
       }
       if (phase === "planning") {
         const readyCount = _countReady();
-        const totalCount = game.combat.combatants.filter(c => _isPlayerCombatant(c)).size ?? 0;
-        const btn = _makeBtn("fas fa-eye", `Reveal (${readyCount}/${totalCount} ready)`, "ghrpg-reveal", "#886600");
+        const total = [...(game.combat?.combatants ?? [])].filter(c => _isPlayerCombatant(c)).length;
+        const btn = _makeBtn("fas fa-eye", `Reveal (${readyCount}/${total} ready)`, "ghrpg-reveal", "#886600");
         controls.appendChild(btn);
       }
       if (phase === "resolution") {
         const btn = _makeBtn("fas fa-forward", "End Round", "ghrpg-end-round", "#664488");
+        controls.appendChild(btn);
+      }
+    } else if (phase === "planning") {
+      // Player: show reopen planning button
+      const myActor = _getMyPlayerCombatant();
+      if (myActor) {
+        const planning = game.combat?.combatants.find(c => c.actorId === myActor.id)
+          ?.getFlag("ghrpg", "planning");
+        const label = planning?.confirmed ? "✓ Confirmed — Change" : "Open Planning";
+        const btn = _makeBtn("fas fa-cards-blank", label, "ghrpg-reopen-planning", "#4a6a8a");
         controls.appendChild(btn);
       }
     }
@@ -56,6 +66,10 @@ export function registerCombatHooks() {
     controls.querySelector("#ghrpg-start-planning")?.addEventListener("click", startPlanning);
     controls.querySelector("#ghrpg-reveal")?.addEventListener("click", revealPlanning);
     controls.querySelector("#ghrpg-end-round")?.addEventListener("click", endRound);
+    controls.querySelector("#ghrpg-reopen-planning")?.addEventListener("click", () => {
+      const actor = _getMyPlayerCombatant();
+      if (actor) openPlanningDialogForActor(actor);
+    });
   });
 
   /* ── Socket: open planning dialog on player clients ─────────── */
@@ -86,6 +100,37 @@ export function registerCombatHooks() {
         if (app instanceof PlanningDialog) app.close();
       }
     }
+  });
+
+  /* ── Block turn/round advancement during planning phase ──────── */
+  Hooks.on("preUpdateCombat", (combat, update, options, userId) => {
+    const phase = combat.getFlag(GHRPG_COMBAT_FLAG, "phase") ?? "none";
+    if (phase !== "planning") return true;
+
+    // Block any turn or round advancement during planning
+    if ("turn" in update || "round" in update) {
+      ui.notifications.warn("Planning phase is active — reveal selections before advancing.");
+      return false;
+    }
+    return true;
+  });
+
+  /* ── Last turn → trigger end round instead of auto-advancing ─── */
+  Hooks.on("preUpdateCombat", (combat, update, options, userId) => {
+    if (!game.user.isGM) return true;
+    const phase = combat.getFlag(GHRPG_COMBAT_FLAG, "phase") ?? "none";
+    if (phase !== "resolution") return true;
+
+    // Detect if this update would increment the round (i.e. we're on the last turn)
+    const newRound = update.round;
+    if (newRound && newRound > combat.round) {
+      // Intercept — run our end-round logic instead
+      update.round = combat.round; // cancel the round increment
+      // Run async end-round after this hook returns
+      setTimeout(() => endRound(), 50);
+      return false;
+    }
+    return true;
   });
 }
 
@@ -185,16 +230,17 @@ async function endRound() {
   if (!combat) return;
 
   // Decay elements
-  await game.ghrpg?.elementTracker?.constructor?.decayAll?.();
-  // Also call via static method
   const { ElementTracker } = await import("./element-tracker.mjs");
   await ElementTracker.decayAll();
 
+  // Advance round counter without triggering our hook (set phase to none first)
   await combat.setFlag(GHRPG_COMBAT_FLAG, "phase", "none");
   await combat.nextRound();
 
-  ui.notifications.info(`Round ${combat.round} ended. Elements decayed.`);
-  ui.combat?.render();
+  ui.notifications.info(`Round ${combat.round - 1} ended. Elements decayed. Starting planning phase...`);
+
+  // Automatically start next planning phase
+  await startPlanning();
 }
 
 /* ── Open planning dialog for an actor ──────────────────────── */
@@ -227,6 +273,15 @@ function _countReady() {
   return [...game.combat.combatants].filter(c =>
     c.getFlag(GHRPG_COMBAT_FLAG, "planning")?.confirmed
   ).length;
+}
+
+function _getMyPlayerCombatant() {
+  if (!game.combat) return null;
+  for (const combatant of game.combat.combatants) {
+    const actor = combatant.actor;
+    if (actor && actor.isOwner && actor.hasPlayerOwner) return actor;
+  }
+  return null;
 }
 
 function _getGMOwnedCombatant() {

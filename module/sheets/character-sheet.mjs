@@ -80,6 +80,24 @@ export class GHRPGCharacterSheet extends HandlebarsApplicationMixin(foundry.appl
   _onRender(context, options) {
     super._onRender(context, options);
     this.changeTab(this.tabGroups.sheet ?? "stats", "sheet", { force: true });
+
+    // Restore scroll positions before wiring events
+    if (this._scrollPositions) {
+      for (const [sel, top] of Object.entries(this._scrollPositions)) {
+        const el = this.element.querySelector(sel);
+        if (el) el.scrollTop = top;
+      }
+    }
+
+    // Save scroll positions on scroll
+    this.element.querySelectorAll(".items-list, .planning-card-list, .deck-tab").forEach(el => {
+      el.addEventListener("scroll", () => {
+        if (!this._scrollPositions) this._scrollPositions = {};
+        // Use a simple selector based on class
+        const key = "." + [...el.classList].find(c => c !== "");
+        this._scrollPositions[key] = el.scrollTop;
+      }, { passive: true });
+    });
     // Auto-save all direct form inputs on change
     this.element.querySelectorAll("input[name], select[name], textarea[name]").forEach(input => {
       input.addEventListener("change", () => this._saveField(input));
