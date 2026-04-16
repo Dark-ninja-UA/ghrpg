@@ -35,18 +35,11 @@
         <span class="cond-group-label positive-label">{{localize "GHRPG.Sheet.Positive"}}</span>
         {{#each conditions.positive}}
         <button type="button"
-                class="condition-btn {{#if active}}active{{/if}}"
+                class="condition-btn cond-{{key}} {{#if active}}active{{/if}}"
                 data-action="toggleCondition"
                 data-condition="{{key}}"
                 title="{{label}}{{#if (eq key 'bless')}} ({{../system.conditions.bless.count}}/6){{/if}}">
-          <span class="cond-icon">
-            {{#if (eq key "bless")}}✦{{/if}}
-            {{#if (eq key "invisible")}}👁{{/if}}
-            {{#if (eq key "regenerate")}}⊕{{/if}}
-            {{#if (eq key "safeguard")}}🛡{{/if}}
-            {{#if (eq key "strengthen")}}💪{{/if}}
-            {{#if (eq key "ward")}}⬡{{/if}}
-          </span>
+          <img class="cond-icon-img" src="systems/ghrpg/icons/conditions/{{key}}.png" alt="{{label}}"/>
           <span class="cond-label">{{label}}</span>
         </button>
         {{/each}}
@@ -55,19 +48,11 @@
         <span class="cond-group-label negative-label">{{localize "GHRPG.Sheet.Negative"}}</span>
         {{#each conditions.negative}}
         <button type="button"
-                class="condition-btn negative {{#if active}}active{{/if}}"
+                class="condition-btn negative cond-{{key}} {{#if active}}active{{/if}}"
                 data-action="toggleCondition"
                 data-condition="{{key}}"
                 title="{{label}}">
-          <span class="cond-icon">
-            {{#if (eq key "curse")}}✧{{/if}}
-            {{#if (eq key "immobilize")}}⚓{{/if}}
-            {{#if (eq key "muddle")}}💀{{/if}}
-            {{#if (eq key "pacify")}}☮{{/if}}
-            {{#if (eq key "poison")}}☠{{/if}}
-            {{#if (eq key "stun")}}⚡{{/if}}
-            {{#if (eq key "wound")}}🩸{{/if}}
-          </span>
+          <img class="cond-icon-img" src="systems/ghrpg/icons/conditions/{{key}}.png" alt="{{label}}"/>
           <span class="cond-label">{{label}}</span>
         </button>
         {{/each}}

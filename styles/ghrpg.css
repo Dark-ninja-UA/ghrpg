@@ -1470,3 +1470,45 @@
 .perk-opt-label { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--ghrpg-text-muted); }
 .perk-opt-label input { width: auto; margin: 0; }
 .perk-editor-actions { display: flex; gap: 8px; justify-content: flex-end; padding-top: 6px; border-top: 1px solid var(--ghrpg-border); }
+
+/* ─── Condition icon images ──────────────────────────────────── */
+.cond-icon-img {
+  width: 36px; height: 36px; object-fit: contain;
+  display: block; margin: 0 auto 2px;
+  /* Base: grayscale so tint filters work cleanly */
+  filter: grayscale(30%) brightness(0.9);
+  transition: filter 0.15s;
+}
+.condition-btn.active .cond-icon-img { filter: none; }
+.condition-btn:hover .cond-icon-img   { filter: brightness(1.15); }
+
+/* Color tints per condition (applied via CSS filter on inactive state) */
+.cond-bless     .cond-icon-img { filter: grayscale(20%) sepia(0.6) saturate(2) hue-rotate(10deg) brightness(0.85); }
+.cond-invisible .cond-icon-img { filter: grayscale(60%) brightness(0.7); }
+.cond-regenerate.cond-icon-img { filter: grayscale(10%) sepia(0.5) saturate(3) hue-rotate(300deg) brightness(0.85); }
+.cond-regenerate .cond-icon-img{ filter: grayscale(10%) sepia(0.5) saturate(3) hue-rotate(300deg) brightness(0.85); }
+.cond-safeguard .cond-icon-img { filter: grayscale(10%) sepia(0.5) saturate(2) hue-rotate(180deg) brightness(0.85); }
+.cond-strengthen .cond-icon-img{ filter: grayscale(10%) sepia(0.4) saturate(2) hue-rotate(190deg) brightness(0.9); }
+.cond-ward      .cond-icon-img { filter: grayscale(10%) sepia(0.5) saturate(2) hue-rotate(250deg) brightness(0.85); }
+.cond-curse     .cond-icon-img { filter: grayscale(10%) sepia(0.7) saturate(3) hue-rotate(260deg) brightness(0.7); }
+.cond-immobilize .cond-icon-img{ filter: grayscale(10%) sepia(0.6) saturate(3) hue-rotate(330deg) brightness(0.85); }
+.cond-muddle    .cond-icon-img { filter: grayscale(10%) sepia(0.5) saturate(2) hue-rotate(80deg) brightness(0.85); }
+.cond-pacify    .cond-icon-img { filter: grayscale(10%) sepia(0.6) saturate(3) hue-rotate(330deg) brightness(0.85); }
+.cond-poison    .cond-icon-img { filter: grayscale(10%) sepia(0.5) saturate(3) hue-rotate(90deg) brightness(0.85); }
+.cond-stun      .cond-icon-img { filter: grayscale(10%) sepia(0.6) saturate(3) hue-rotate(330deg) brightness(0.85); }
+.cond-wound     .cond-icon-img { filter: grayscale(10%) sepia(0.6) saturate(3) hue-rotate(330deg) brightness(0.85); }
+
+/* Active state — full color, no tint filter */
+.condition-btn.active.cond-bless      .cond-icon-img { filter: sepia(1) saturate(4) hue-rotate(10deg) brightness(1.1); }
+.condition-btn.active.cond-invisible  .cond-icon-img { filter: brightness(1.1) contrast(1.1); }
+.condition-btn.active.cond-regenerate .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(300deg) brightness(1.1); }
+.condition-btn.active.cond-safeguard  .cond-icon-img { filter: sepia(1) saturate(4) hue-rotate(180deg) brightness(1.1); }
+.condition-btn.active.cond-strengthen .cond-icon-img { filter: sepia(1) saturate(3) hue-rotate(190deg) brightness(1.1); }
+.condition-btn.active.cond-ward       .cond-icon-img { filter: sepia(1) saturate(4) hue-rotate(250deg) brightness(1.1); }
+.condition-btn.active.cond-curse      .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(260deg) brightness(1); }
+.condition-btn.active.cond-immobilize .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(330deg) brightness(1.1); }
+.condition-btn.active.cond-muddle     .cond-icon-img { filter: sepia(1) saturate(4) hue-rotate(80deg) brightness(1.1); }
+.condition-btn.active.cond-pacify     .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(330deg) brightness(1.1); }
+.condition-btn.active.cond-poison     .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(90deg) brightness(1.1); }
+.condition-btn.active.cond-stun       .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(330deg) brightness(1.1); }
+.condition-btn.active.cond-wound      .cond-icon-img { filter: sepia(1) saturate(5) hue-rotate(330deg) brightness(1.1); }
