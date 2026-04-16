@@ -19,7 +19,7 @@ export class PlanningDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
     id:      "ghrpg-planning-dialog",
     classes: ["ghrpg", "planning-dialog"],
-    position: { width: 560, height: "auto", top: 80, left: "auto" },
+    position: { width: 560, height: 620 },
     window: {
       title:       "Planning Phase — Choose Your Cards",
       resizable:   false,
@@ -180,6 +180,16 @@ export class PlanningDialog extends HandlebarsApplicationMixin(ApplicationV2) {
   /* ── Card click (from list) — assigns to first empty slot ───── */
   _onRender(context, options) {
     super._onRender(context, options);
+
+    // Center on first render
+    if (options.isFirstRender) {
+      const w = 560, h = 620;
+      this.setPosition({
+        left: Math.max(0, (window.innerWidth  - w) / 2),
+        top:  Math.max(0, (window.innerHeight - h) / 2),
+        width: w, height: h,
+      });
+    }
     this.element.querySelectorAll(".plan-card-item").forEach(el => {
       el.addEventListener("click", () => {
         if (this._confirmed) return;

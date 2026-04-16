@@ -1646,3 +1646,15 @@
 .reveal-card-label.init-card { color: var(--ghrpg-gold); }
 .reveal-card-img { width: 18px; height: 18px; border-radius: 2px; object-fit: cover; }
 .reveal-card-name { color: var(--ghrpg-text); }
+
+/* ─── Simplified reveal chat rows ────────────────────────────── */
+.ghrpg .reveal-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 6px; border-bottom: 1px solid var(--ghrpg-border);
+  font-size: 12px;
+}
+.ghrpg .reveal-row:last-child { border-bottom: none; }
+.ghrpg .reveal-rank  { font-weight: 900; color: var(--ghrpg-gold-light); width: 20px; flex-shrink: 0; }
+.ghrpg .reveal-name  { flex: 1; }
+.ghrpg .reveal-init  { color: var(--ghrpg-gold); font-weight: bold; flex-shrink: 0; }
+.ghrpg .reveal-cards-text { color: var(--ghrpg-text-muted); font-size: 11px; flex-shrink: 0; }

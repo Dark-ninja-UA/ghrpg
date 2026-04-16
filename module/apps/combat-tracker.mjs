@@ -13,6 +13,10 @@ export function registerCombatHooks() {
   Hooks.on("renderCombatTracker", (app, html, data) => {
     if (!game.combat) return;
 
+    // Remove any existing GHRPG controls to avoid duplicates
+    const root = html[0] ?? html;
+    root.querySelectorAll?.(".ghrpg-combat-controls").forEach(el => el.remove());
+
     const phase = game.combat.getFlag(GHRPG_COMBAT_FLAG, "phase") ?? "none";
     const isGM  = game.user.isGM;
 
@@ -141,37 +145,24 @@ async function revealPlanning() {
     return (a.planning.tiebreaker ?? 99) - (b.planning.tiebreaker ?? 99);
   });
 
-  // Post to chat
-  let chatContent = `<div class="ghrpg chat-roll"><h3 class="roll-title"><i class="fas fa-eye"></i> Round ${combat.round} — Initiative Order</h3><div class="reveal-list">`;
+  // Post to chat — simple one-line-per-player format
+  let chatContent = `<div class="ghrpg chat-roll">
+<h3 class="roll-title"><i class="fas fa-flag"></i> Round ${combat.round} — Initiative Order</h3>
+<div class="reveal-list">`;
 
   for (let i = 0; i < reveals.length; i++) {
     const { planning, actor, card0, card1 } = reveals[i];
     const initCard  = planning.initiativeSlot === 0 ? card0 : card1;
     const otherCard = planning.initiativeSlot === 0 ? card1 : card0;
-
-    chatContent += `
-<div class="reveal-entry">
-  <div class="reveal-rank">${i + 1}</div>
-  <img class="reveal-actor-img" src="${actor.img}" />
-  <div class="reveal-actor-name">${actor.name}</div>
-  <div class="reveal-initiative"><i class="fas fa-flag"></i> ${planning.initiative}</div>
-  <div class="reveal-cards">
-    <div class="reveal-card-row">
-      <span class="reveal-card-label init-card">Initiative Card:</span>
-      <img class="reveal-card-img" src="${initCard?.img ?? ''}" title="${initCard?.name ?? ''}"/>
-      <span class="reveal-card-name">${initCard?.name ?? '—'}</span>
-    </div>
-    <div class="reveal-card-row">
-      <span class="reveal-card-label">Other Card:</span>
-      <img class="reveal-card-img" src="${otherCard?.img ?? ''}" title="${otherCard?.name ?? ''}"/>
-      <span class="reveal-card-name">${otherCard?.name ?? '—'}</span>
-    </div>
-  </div>
+    chatContent += `<div class="reveal-row">
+  <span class="reveal-rank">${i + 1}.</span>
+  <strong class="reveal-name">${actor.name}</strong>
+  <span class="reveal-init"><i class="fas fa-flag"></i> ${planning.initiative}</span>
+  <span class="reveal-cards-text">${initCard?.name ?? '—'} &amp; ${otherCard?.name ?? '—'}</span>
 </div>`;
   }
 
   chatContent += `</div></div>`;
-
   await ChatMessage.create({ content: chatContent });
 
   // Close planning dialogs
